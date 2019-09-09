@@ -1,0 +1,38 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+}
+
+.site-space-background {
+    z-index: -5;
+    min-height: 100%;
+    min-width: 100%;
+    position: fixed;
+    background: #1A1939 no-repeat center center;
+    background-image: url('/static/images/camera3.jpg');
+    background-attachment: fixed;
+    background-size: cover;
+    animation: shrink 15s infinite alternate;
+}
+
+@keyframes shrink {
+    0% {
+        transform: scale(1.2)
+    }
+
+    100% {
+        transform: scale(1.0)
+    }
+}
+
+.site-main-banner{
+    margin-top: none;
+    padding-top: 1em;
+    z-index: 1;
+}
+
+.ban{
+    background-color: white;
+    padding: 2em;
+}
