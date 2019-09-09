@@ -1,0 +1,20 @@
+{% extends "common.html" %}
+{% block content %}
+<div>
+    <form method="POST" action="">
+        <fieldset>
+            <div>
+                {{ login.email.label }}
+                {{ login.email }}
+            </div>
+            <div>
+                {{ login.password.label }}
+                {{ login.password }}
+            </div>
+        </fieldset>
+        <div>
+            {{ login.submit }}
+        </div>
+    </form>
+</div>
+{% endblock %} 
