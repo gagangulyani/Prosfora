@@ -28,6 +28,9 @@ def login():
 def explore():
     return render_template('explore.html')
 
+@app.route('/logout')
+def logout():
+    return render_template('logout.html')
 
 @app.route('/search')
 def search():
@@ -37,10 +40,6 @@ def search():
 @app.route('/api')
 def api():
     return jsonify({})
-
-@app.route('/logout')
-def logout():
-    return render_template('logout.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
