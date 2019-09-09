@@ -30,7 +30,10 @@ def explore():
 
 @app.route('/logout')
 def logout():
-    # displays logout page to the user
+    #cool_it_works
+    #logout_module
+    #gagan_is_cool
+    #learning_git
     return render_template('logout.html')
 
 @app.route('/search')
