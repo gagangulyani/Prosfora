@@ -30,6 +30,7 @@ def explore():
 
 @app.route('/logout')
 def logout():
+    # displays logout page to the user
     return render_template('logout.html')
 
 @app.route('/search')
