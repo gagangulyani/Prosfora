@@ -24,15 +24,14 @@ def signup():
 def login():
     return render_template('login.html')
 
-
-@app.route('/logout')
-def logout():
-    return render_template('logout.html')
-
-
 @app.route('/explore')
 def explore():
     return render_template('explore.html')
+
+    
+@app.route('/logout')
+def logout():
+    return render_template('logout.html')
 
 
 @app.route('/search')
