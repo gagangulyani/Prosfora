@@ -3,18 +3,37 @@ html {
     margin: 0;
     padding: 0;
 }
+.form-inline{
+    width:100%;
+    border-radius: 2em;
+    background: #DDDDDD;
+    padding: 0.5em 0.7em 0.5em 0.7em;
+}
 
+.form-inline .fa-search{
+    font-size: 1em;
+}
+.form-control-{
+    border: none;
+    background: #DDDDDD;
+    outline: 0;
+}
+
+.search-btn, .search-btn:hover{
+    color:black;
+    text-decoration: none;
+}
 .searchbar {
     margin-bottom: auto;
     margin-top: auto;
     height: 60px;
-    background-color: #353b48;
+    background-color: white;
     border-radius: 30px;
     padding: 10px;
 }
 
 .search_input {
-    color: white;
+    color: black;
     border: 0;
     outline: 0;
     background: none;
@@ -27,13 +46,13 @@ html {
 .searchbar:hover>.search_input {
     padding: 0 10px;
     width: 450px;
-    caret-color: red;
+    caret-color: black;
     transition: width 0.4s linear;
 }
 
 .searchbar:hover>.search_icon {
     background: white;
-    color: #e74c3c;
+    color: black;
 }
 
 .search_icon {
@@ -44,7 +63,7 @@ html {
     justify-content: center;
     align-items: center;
     border-radius: 50%;
-    color: white;
+    color:black;
 }
 
 .site-space-background {
