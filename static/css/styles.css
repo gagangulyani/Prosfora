@@ -161,8 +161,11 @@ html {
     #heading {
         font-size: 2em;
     }
-    .site-space-background{
-        height: 50vh!important;
+    .searchbar:hover>.search_input{
+        width: 80%;
+    }
+    .site-main-banner,.site-space-background{
+        min-height: 40vh!important;
     }
 }
 
