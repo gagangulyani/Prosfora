@@ -4,7 +4,9 @@ html {
     padding: 0;
 }
 
-.navbar-nav {}
+.w-80{
+    width: 80%;
+}
 
 .form-inline {
     width: 100%;
@@ -62,6 +64,7 @@ html {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 0.2em;
     font-weight: bold;
+    font-size: 0.9em;
     color: inherit;
     transition: all 0.2s ease;
 }
