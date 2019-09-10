@@ -18,7 +18,7 @@
 
 <body>
     {% block navbar %}
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top justify-content-between">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container">
             <a class="navbar-brand p-0 m-0 mr-2" href="/"><img width="45" height="45" src="{{url_for('static', filename='images/logo.svg')}}" alt="Prosforá">Prosforá</a>
 
@@ -27,7 +27,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav justify-content-between">
                     <li class="nav-item mx-2">
                         <form class="form-inline" action='/search'>
                             <input class="form-control- mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
@@ -53,6 +53,7 @@
                     <li class="nav-item mx-2">
                         <a class="nav-link submit-a-photo" href="#">Post your Content</a>
                     </li>
+
                     <li class="nav-item mx-2 dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-ellipsis-v"></i>
