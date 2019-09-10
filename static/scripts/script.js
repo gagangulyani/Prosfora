@@ -12,11 +12,11 @@ var imgs = new Array(
 function changeBg() {
     var imgUrl = imgs[Math.floor(Math.random()*imgs.length)];
     $('.site-space-background').css('background-image', 'url("/static/images/backgrounds/' + imgUrl + '")');
-    $('.site-space-background').fadeIn(1000); //this is new, will fade in smoothly
+    $('.site-space-background').fadeIn(0); //this is new, will fade in smoothly
 }
 
 function changeBackgroundSmoothly() {
-    $('.site-space-background').fadeOut(1000, changeBg); //this is new, will fade out smoothly
+    $('.site-space-background').fadeOut(0, changeBg); //this is new, will fade out smoothly
 }
 
 setInterval(changeBackgroundSmoothly,10000);
