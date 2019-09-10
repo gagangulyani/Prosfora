@@ -1,69 +1,67 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-
 <!DOCTYPE html>
 <html>
+
 <head>
-   <!-- Required meta tags -->
+    <!-- Required meta tags -->
     {% block styles %}
     {{super()}}
     <meta charset="utf-8">
     <link rel='shortcut icon' type='image/x-icon' href='{{url_for("static", filename="images/favicon.ico")}}' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
     {% endblock %}
-
     {% block title%}Prosforá{% endblock %}
-
 </head>
+
 <body>
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
         <div class="container container-nav">
-      <a class="navbar-brand p-0 m-0" href="#"><img width="45" height="45" src="{{url_for('static', filename='images/logo.svg')}}" alt=""></a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-          </li>
-          <li class="nav-item">
-            <form class="form-inline" action='/search'>
-              <input class="form-control- mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
-              <i class="fas fa-search"></i>
-            </form>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Features</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Dropdown link
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-              <a class="dropdown-item" href="#">Action</a>
-              <a class="dropdown-item" href="#">Another action</a>
-              <a class="dropdown-item" href="#">Something else here</a>
+            <a class="navbar-brand p-0 m-0" href="#"><img width="45" height="45" src="{{url_for('static', filename='images/logo.svg')}}" alt=""></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <form class="form-inline" action='/search'>
+                            <input class="form-control- mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="q">
+                            <i class="fas fa-search"></i>
+                        </form>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown link
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </li>
-        </ul>
-      </div>
-      </div>
+        </div>
     </nav>
-
     {% endblock %}
-	{% block content %}{% endblock %}
-
+    {% block content %}{% endblock %}
     {% block scripts %}
     {{super()}}
-        <script src = "{{url_for('static', filename = 'scripts/script.js')}}"></script>
-        {{ moment.include_moment() }}
+    <script src="{{url_for('static', filename = 'scripts/script.js')}}"></script>
+    {{ moment.include_moment() }}
     {% endblock %}
 </body>
+
 </html>
