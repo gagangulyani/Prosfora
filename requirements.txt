@@ -1,7 +1,7 @@
 Click==7.0
 dominate==2.4.0
 Flask==1.1.1
-Flask-Bootstrap4==4.0.2
+flask-bootstrap4
 Flask-Moment==0.9.0
 Flask-WTF==0.14.2
 itsdangerous==1.1.0
