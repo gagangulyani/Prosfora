@@ -4,7 +4,7 @@ html {
     padding: 0;
 }
 
-.w-80{
+.w-80 {
     width: 80%;
 }
 
@@ -153,6 +153,28 @@ html {
     #heading {
         font-size: 4em;
     }
+    .site-main-banner,
+    .site-space-background {
+        min-height: 55vh !important;
+    }
+
+    .img-logo{
+        width:50%!important;
+    }
+
+    .display-4{
+        background-color: white;
+        line-height: 1.4em;
+    }
+
+    body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a{
+        color:#22AADD!important;
+
+        text-shadow: none!important:;
+        background-color: none!important:;
+        padding: initial!important:;
+        border-radius: initial!important:;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -160,15 +182,22 @@ html {
         font-size: 3.5em;
     }
 }
+
 @media screen and (max-width: 577px) {
     #heading {
         font-size: 2em;
     }
-    .searchbar:hover>.search_input{
+
+    .searchbar:hover>.search_input {
         width: 80%;
     }
-    .site-main-banner,.site-space-background{
-        min-height: 40vh!important;
+    .site-main-banner,
+    .site-space-background {
+        min-height: 40vh !important;
+    }
+
+    .bg-cont {
+        background: white!important;
     }
 }
 
@@ -191,4 +220,56 @@ html {
     background: white;
     margin: none;
     padding: none;
+}
+
+.bg-cont {
+    background-image: url('/static/images/content/1081.jpg');
+    min-height: 80vh;
+    background-color: white;
+    background-position: top;
+    background-size: cover;
+    color: white;
+}
+
+.text-middle {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.img-logo{
+    width:65%;
+    vertical-align: middle;
+}
+
+.navbar{
+    box-shadow: 1px 1px 10px rgba(0,0,0,0.5);
+}
+body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a{
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s ease; 
+}
+
+body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a:hover{
+    text-shadow: 1px 1px 8px white,
+                1px 1px 8px #22AADD;
+    background-color: rgba(255,255,255,0.7);
+    padding: 0.3em;
+    border-radius: 2em;
+}
+
+.landing-3{
+    min-height: 100vh;
+    color:white;
+    background-color: black;
+}
+
+.yellow{
+    color:yellow;
+    border : 3px dashed yellow;
+    padding: 0.3em;
+    border-radius: 100%;
+
+
 }

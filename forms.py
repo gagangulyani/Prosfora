@@ -2,14 +2,14 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 
 
-class LoginForm(FlaskForm):
+class Login(FlaskForm):
     
     email = StringField('Email')
     password = StringField('Password')
     submit = SubmitField('Login')
 
 
-class Join(FlaskForm):
+class Register(FlaskForm):
     name = StringField('Name')
     city = StringField('City')
     number = StringField('Contact Number')

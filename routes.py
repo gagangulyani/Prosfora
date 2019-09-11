@@ -5,7 +5,7 @@ Prosfora Routes
 from flask import Flask, render_template, jsonify
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from forms import LoginForm, Join
+from forms import Login, Register
 
 
 app = Flask(__name__)
@@ -19,14 +19,15 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/signup')
-def signup():
-    return render_template('signup.html')
+@app.route('/register')
+def register():
+    form = Register()
+    return render_template('register.html', form=form)
 
 
 @app.route('/login',methods=['GET','POST'])
 def login():
-    form = LoginForm() 
+    form = Login() 
     return render_template('login.html',form=form)
 
 
