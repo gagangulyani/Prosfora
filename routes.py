@@ -2,7 +2,7 @@
 Prosfora Routes
 
 """
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from forms import Login, Register
@@ -19,9 +19,14 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/register')
+@app.route('/register',methods=['GET','POST'])
 def register():
     form = Register()
+    if request.method == 'POST' :
+        if form.validate_on_submit():
+            return render_template('index.html')
+        else:
+            return render_template('register.html', form=form)
     return render_template('register.html', form=form)
 
 

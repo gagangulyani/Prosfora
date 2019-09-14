@@ -1,4 +1,8 @@
-def checkForJunk(form = None, field = None, usrtext= None):
+from string import punctuation
+from wtforms.validators import ValidationError
+
+
+def checkForJunk(form=None, field=None, usrtext=None):
     punct = punctuation.replace('_', '')
     if not field:
         field = {'data': usrtext}
@@ -8,7 +12,7 @@ def checkForJunk(form = None, field = None, usrtext= None):
                 return True
             else:
                 raise ValidationError(
-                'Only Alphabets, Numbers and Underscores Allowed!')
+                    'Only Alphabets, Numbers and Underscores Allowed!')
 
 
 def StrongPassword(form, field):
@@ -34,12 +38,36 @@ def StrongPassword(form, field):
     if errors:
         message = "Password Must Contain atleast 1 "
         errors = [errors[msg] for msg in errors]
-        extra = ", ".join(errors[:-1]) 
+        extra = ", ".join(errors[:-1])
         if extra:
             extra2 = " and " + errors[-1]
         else:
             extra2 = errors[-1]
-        
+
         message += extra + extra2
 
         raise ValidationError(message)
+
+
+def isUser(form, field):
+    """
+    TODO
+        1. 
+        2. Check if user exists in db.
+    """
+    pass
+
+
+def Age(form, field):
+    age = field.data
+    if age.isdigit():
+        age = int(age)
+        if age < 13 and age > 5:
+            raise ValidationError("You need to be a Teenager or \
+Older for Registering on Site..")
+        elif age > 150 or age < 5:
+            raise ValidationError("Invalid Age")
+
+    else:
+        raise ValidationError("Please Enter a Valid Age\
+ (Example : 18)")

@@ -6,33 +6,19 @@ class User:
         User consists of the following Attributes:
 
             userID -> Unique 32 character string
-
             username -> Username of the User
-
             name -> Name of the User
-
             password -> Password of the User 
-
             country -> Name of the country User belongs to
-
             bio -> User's Bio 
-
             totalDownloads -> Number of Downloads of User's Content
-
             totalLikes -> Number of Likes of User's Content
-
             followers -> Array of UserIDs
-
             following -> Array of UserIDs
-
             profilePicture -> Profile Picture of the User
-
             coverPhoto -> Cover Photo of the User
-
             isActive -> is User's account activated
-
             ProfileClicks -> Number of Profile Clicks
-
             isPublic -> is User's profile Public
 
     """
@@ -116,12 +102,20 @@ class User:
         Database.delete(User.COLLECTION, {'_id': _id})
 
     @staticmethod
-    def 
+    def isUser(email = None, username = None):
+        if email:
+            result = Database.find(User.COLLECTION, {'email': email})
 
+        if username:
+            result = Database.find(User.COLLECTION, {'username': username})
 
+        if result:
+            return True
+        return False
 
+    @staticmethod
+    def verifyEmail(email):
+        pass
 
 if __name__ == '__main__':
     Database.initialize('Prosfora')
-
-
