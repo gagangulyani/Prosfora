@@ -52,11 +52,15 @@ def StrongPassword(form, field):
 
 def isUser(form, field, login = False):
     email = field.data
-    
+    isEmail = re.compile(r"[^@]+@[^@]+\.[^@]+")
+
     if len(email) > 100:
         raise ValidationError('Email or Username is too lengthy!')
 
-    isUser_ = User.isUser(email)
+    if isEmail.fullmatch(email):
+        isUser_ = User.isUser(email = email)
+    else:
+        isUser_ = User.isUser(username = email)
 
     if login:
         if not isUser_:
