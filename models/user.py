@@ -1,5 +1,6 @@
 from database import Database
 
+
 class User:
     COLLECTION = 'Users'
     """
@@ -98,11 +99,12 @@ class User:
             4. Delete entry from all users who were 
                followed or being followed by user
             5. Delete All likes/dislikes made by User
+            6. Delete Posts Shared by Other User
         """
         Database.delete(User.COLLECTION, {'_id': _id})
 
     @staticmethod
-    def isUser(email = None, username = None):
+    def isUser(email=None, username=None):
         if email:
             result = Database.find(User.COLLECTION, {'email': email})
 
@@ -114,7 +116,85 @@ class User:
         return False
 
     @staticmethod
+    def isVerified():
+        pass
+
+    @staticmethod
+    def updateInfo():
+        pass
+
+    @staticmethod
+    def updatePostInfo():
+        pass
+
+    @staticmethod
     def verifyEmail(email):
+        pass
+
+    @staticmethod
+    def Post(content, type):
+        """
+        content:
+            data of the post
+
+        type attribute for identifying :
+            1. Text, 
+            2. Videos, 
+            3. Audios, 
+            4. Images
+        """
+        pass
+
+    @staticmethod
+    def displayAllPosts(_id):
+        pass
+
+    @staticmethod
+    def deletePost(postID):
+        pass
+
+    @staticmethod
+    def updatePost(postID):
+        pass
+
+    @staticmethod
+    def Comment(comment, postID):
+        pass
+
+    @staticmethod
+    def updateComment(comment, postID):
+        pass    
+
+    @staticmethod
+    def removeComment(PostID, commentID):
+        pass
+
+    @staticmethod
+    def React(PostID):
+        pass
+
+    @staticmethod
+    def Reply():
+        pass
+
+    @staticmethod
+    def updateReply():
+        pass
+
+    @staticmethod
+    def removeReply():
+        pass
+
+    @staticmethod
+    def Follow():
+        pass
+
+    @staticmethod
+    def Unfollow():
+        pass
+
+    @staticmethod
+    def Share(postID):
         pass
 
 if __name__ == '__main__':

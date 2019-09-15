@@ -9,7 +9,7 @@ from customValidators import checkForJunk, StrongPassword, isUser
 
 class Login(FlaskForm):
 
-    username = StringField("Email/Username",
+    email = StringField("Email/Username",
                            validators=[
                                InputRequired(
                                    'Please Enter your Username Or Email'),
