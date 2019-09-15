@@ -2,6 +2,7 @@ import pymongo
 from bson.json_util import dumps
 import gridfs
 
+
 class Database(object):
     URI = "mongodb://127.0.0.1:27017"
     DATABASE = None
@@ -52,7 +53,9 @@ class Database(object):
 
     @staticmethod
     def loadFile(_id):
-        return FS.get(_id)
+        out = FS.get(_id)
+        return {'file': out,
+                'created_at': out.upload_date}
 
     @staticmethod
     def created_at(_id):

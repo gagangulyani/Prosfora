@@ -8,7 +8,7 @@ class Post:
 
             postID -> Unique 32 character string
             userID -> Unique 32 character string
-            types -> Choose from Multiple Media Options
+            contentType -> Choose from Multiple Media Options
             title -> Title of the Post/Track Name/Video Name
             content -> Written Content of the Post
             description -> Explanation of files chosen for upload
@@ -25,21 +25,21 @@ class Post:
     def __init__(self,
                  postID,
                  userID,
-                 types ,
-                 title ,
-                 content, 
-                 description, 
+                 contentType,
+                 title,
+                 content,
+                 description,
                  comments=[],
                  totalLikes=0,
                  totalDownloads=0,
                  totalClicks=0,
-                 likes=[], 
-                 dislikes=[], 
+                 likes=[],
+                 dislikes=[],
                  _id=None):
 
         self.postID = postID
         self.userID = userID
-        self.types = types
+        self.contentType = contentType
         self.title = title
         self.content = content
         self.description = description
@@ -55,13 +55,13 @@ class Post:
         return {
             "postID": self.postID
             "userID": self.userID
-            "types":  self.types
+            "contentType": self.contentType
             "title": self.title
             "content": self.content
             "description": self.description
             "comments": self.comments
             "totalLikes": self.totalLikes
-            "totalDownloads":self.totalDownloads
+            "totalDownloads": self.totalDownloads
             "totalClicks": self.totalClicks
             "likes": self.likes
             "dislikes": self.dislikes
@@ -69,4 +69,4 @@ class Post:
 
     @staticmethod
     def savePost(self):
-        Database.insert(Post.COLLECTION, toJson(self))         
+        Database.insert(Post.COLLECTION, self.toJson())

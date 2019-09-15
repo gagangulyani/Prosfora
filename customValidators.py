@@ -1,5 +1,6 @@
 from string import punctuation
 from wtforms.validators import ValidationError
+from models.user import User
 
 
 def checkForJunk(form=None, field=None, usrtext=None):
@@ -49,13 +50,23 @@ def StrongPassword(form, field):
         raise ValidationError(message)
 
 
-def isUser(form, field):
-    """
-    TODO
-        1. 
-        2. Check if user exists in db.
-    """
-    pass
+def isUser(form, field, login = False):
+    email = field.data
+    if len(email) > 100:
+        raise ValidationError('Email or Username is too lengthy!')
+
+    isUser_ = User.isUser(email)
+
+    if login:
+        if not isUser_:
+            raise ValidationError('Account Does Not exist!')
+
+    else:
+        if isUser_:
+            raise ValidationError('Account already exists!')
+
+
+
 
 
 def Age(form, field):
