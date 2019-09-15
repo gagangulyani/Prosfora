@@ -69,4 +69,24 @@ class Post:
 
     @staticmethod
     def savePost(self):
-        Database.insert(Post.COLLECTION, toJson(self))         
+        Database.insert(Post.COLLECTION, toJson(self))  
+
+    @staticmethod
+    def updatePost(self):
+        pass
+ 
+    @staticmethod
+    def deletePost(self):
+        pass
+
+    @staticmethod
+    def viewLikes(self):
+        pass
+
+    @staticmethod
+    def viewComments(self):
+       pass
+
+              
+
+
