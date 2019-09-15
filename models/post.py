@@ -53,17 +53,17 @@ class Post:
 
     def toJson(self):
         return {
-            "postID": self.postID
-            "userID": self.userID
-            "types":  self.types
-            "title": self.title
-            "content": self.content
-            "description": self.description
-            "comments": self.comments
-            "totalLikes": self.totalLikes
-            "totalDownloads":self.totalDownloads
-            "totalClicks": self.totalClicks
-            "likes": self.likes
+            "postID": self.postID,
+            "userID": self.userID,
+            "types":  self.types,
+            "title": self.title,
+            "content": self.content,
+            "description": self.description,
+            "comments": self.comments,
+            "totalLikes": self.totalLikes,
+            "totalDownloads":self.totalDownloads,
+            "totalClicks": self.totalClicks,
+            "likes": self.likes,
             "dislikes": self.dislikes
         }
 
@@ -87,6 +87,6 @@ class Post:
     def viewComments(self):
        pass
 
-              
+
 
 
