@@ -1,14 +1,17 @@
 import pymongo
 from bson.json_util import dumps
+import gridfs
 
 class Database(object):
     URI = "mongodb://127.0.0.1:27017"
     DATABASE = None
+    FS = None
 
     @staticmethod
     def initialize(datab):
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client[datab]
+        FS = gridfs.GridFS(Database.DATABASE)
 
     @staticmethod
     def insert(collection, data):
@@ -42,6 +45,14 @@ class Database(object):
 
         return Database.DATABASE[collection].update_many(query,
                                                          {"$set": update_query})
+
+    @staticmethod
+    def saveFile(binaryObj):
+        return FS.put(binaryObj)
+
+    @staticmethod
+    def loadFile(_id):
+        return FS.get(_id)
 
     @staticmethod
     def created_at(_id):

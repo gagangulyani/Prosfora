@@ -63,8 +63,8 @@ def Age(form, field):
     if age.isdigit():
         age = int(age)
         if age < 13 and age > 5:
-            raise ValidationError("You need to be a Teenager or \
-Older for Registering on Site..")
+            raise ValidationError("You must be Older than 13 \
+years old to Register")
         elif age > 150 or age < 5:
             raise ValidationError("Invalid Age")
 
