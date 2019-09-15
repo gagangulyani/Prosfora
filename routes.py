@@ -8,9 +8,10 @@ from flask import (Flask, render_template,
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from forms import Login, Register
+from uuid import uuid4
 
 app = Flask(__name__)
-app.config['SECRET_KEY']='05b714016e2cf744e1aac4d021404a72'
+app.config['SECRET_KEY']= str(uuid4())
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
