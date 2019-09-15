@@ -1,10 +1,10 @@
-from database import Database
+from models.database import Database
 
 class User:
     COLLECTION = 'Users'
     """
         User consists of the following Attributes:
-
+         
             userID -> Unique 32 character string
             username -> Username of the User
             name -> Name of the User

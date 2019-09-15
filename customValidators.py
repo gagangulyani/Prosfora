@@ -52,6 +52,7 @@ def StrongPassword(form, field):
 
 def isUser(form, field, login = False):
     email = field.data
+    
     if len(email) > 100:
         raise ValidationError('Email or Username is too lengthy!')
 
@@ -64,8 +65,6 @@ def isUser(form, field, login = False):
     else:
         if isUser_:
             raise ValidationError('Account already exists!')
-
-
 
 
 

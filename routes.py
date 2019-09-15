@@ -8,12 +8,9 @@ from flask import (Flask, render_template,
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from forms import Login, Register
-from flask_login import LoginManager , UserMixin
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY']='05b714016e2cf744e1aac4d021404a72'
-login_manager = LoginManager(app)
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 

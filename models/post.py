@@ -74,7 +74,7 @@ class Post:
     @staticmethod
     def updatePost(self):
         pass
- 
+
     @staticmethod
     def deletePost(self):
         pass
@@ -85,4 +85,4 @@ class Post:
 
     @staticmethod
     def viewComments(self):
-       pass
+        pass
