@@ -2,14 +2,16 @@
 Prosfora Routes
 
 """
-from flask import Flask, render_template, jsonify, request
+from flask import (Flask, render_template,
+                   jsonify, request, session, redirect, flash,
+                   url_for)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from forms import Login, Register
 
 
 app = Flask(__name__)
-app.config['SECRET_KEY']='05b714016e2cf744e1aac4d021404a72'
+app.config['SECRET_KEY'] = '05b714016e2cf744e1aac4d021404a72'
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
@@ -19,21 +21,22 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/register',methods=['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = Register()
-    if request.method == 'POST' :
+    if request.method == 'POST':
         if form.validate_on_submit():
-            return render_template('index.html')
+            flash('Please Login to Continue')
+            return redirect('login')
         else:
             return render_template('register.html', form=form)
     return render_template('register.html', form=form)
 
 
-@app.route('/login',methods=['GET','POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = Login() 
-    return render_template('login.html',form=form)
+    form = Login()
+    return render_template('login.html', form=form)
 
 
 @app.route('/explore')

@@ -1,6 +1,5 @@
 from database import Database
 
-
 class User:
     COLLECTION = 'Users'
     """
@@ -21,7 +20,6 @@ class User:
             isActive -> is User's account activated
             ProfileClicks -> Number of Profile Clicks
             isPublic -> is User's profile Public
-
     """
 
     def __init__(self,
@@ -81,9 +79,8 @@ class User:
             "isPublic": self.isPublic
         }
 
-    @staticmethod
-    def saveUser(usrObj):
-        Database.insert(User.COLLECTION, usrObj)
+    def saveUser(self):
+        Database.insert(User.COLLECTION, self.toJson())
 
     @staticmethod
     def findUser(_id):
