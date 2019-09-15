@@ -53,20 +53,36 @@ class Post:
 
     def toJson(self):
         return {
-            "postID": self.postID
-            "userID": self.userID
-            "contentType": self.contentType
-            "title": self.title
-            "content": self.content
-            "description": self.description
-            "comments": self.comments
-            "totalLikes": self.totalLikes
-            "totalDownloads": self.totalDownloads
-            "totalClicks": self.totalClicks
-            "likes": self.likes
+            "postID": self.postID,
+            "userID": self.userID,
+            "contentType": self.contentType,
+            "title": self.title,
+            "content": self.content,
+            "description": self.description,
+            "comments": self.comments,
+            "totalLikes": self.totalLikes,
+            "totalDownloads":self.totalDownloads,
+            "totalClicks": self.totalClicks,
+            "likes": self.likes,
             "dislikes": self.dislikes
         }
 
     @staticmethod
     def savePost(self):
         Database.insert(Post.COLLECTION, self.toJson())
+
+    @staticmethod
+    def updatePost(self):
+        pass
+ 
+    @staticmethod
+    def deletePost(self):
+        pass
+
+    @staticmethod
+    def viewLikes(self):
+        pass
+
+    @staticmethod
+    def viewComments(self):
+       pass
