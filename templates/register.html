@@ -2,12 +2,13 @@
 {% block content %}
 <div class=content-section>
     {{super()}}
+
+    <h1 class="display-4 mb-4">Register</h1>
     <form method="POST" action="">
         {{form.hidden_tag()}}
         {% for field in form %}
             {% if field.type != 'CSRFTokenField' and field.type!='SubmitField' %}
                 <div class="form-group">
-                   {{ field.label(class="form-control-label") }}
                    {{ field(class="form-control form-control-lg") }}
                 </div>
                 {% for error in field.errors %}
