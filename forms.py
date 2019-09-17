@@ -1,21 +1,23 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField,
-                     PasswordField, RadioField,IntegerField)
+                     PasswordField, RadioField, IntegerField)
 
 from wtforms.validators import (InputRequired,
                                 Length, Email, EqualTo)
-from customValidators import checkForJunk, StrongPassword, isUser
+
+from customValidators import (checkForJunk,
+                              StrongPassword, isUser, isUser2)
 
 
 class Login(FlaskForm):
 
     email = StringField("Email/Username",
-                           validators=[
-                               InputRequired(
-                                   'Please Enter your Username Or Email'),
-                               Length(min=4, max=50,
-                                      message='Invalid Username'), checkForJunk],
-                           render_kw={"placeholder": "Martha_Jones96"})
+                        validators=[
+                            InputRequired(
+                                'Please Enter your Username Or Email'),
+                            Length(min=4, max=50,
+                                   message='Invalid Username'), isUser2],
+                        render_kw={"placeholder": "Martha_Jones96"})
 
     password = PasswordField("Password",
                              validators=[
@@ -40,16 +42,17 @@ class Register(FlaskForm):
     email = StringField("Email",
                         validators=[
                             InputRequired('Please Enter your Email'),
-                            Email('Please Enter a valid email address')
+                            Email('Please Enter a valid email address'),
+                            isUser
                         ], render_kw={
                             "placeholder": "Your Email Address"})
 
     username = StringField("Username",
-                        validators=[
-                            InputRequired('Please Enter your Email'),
-                            checkForJunk, isUser
-                        ], render_kw={
-                            "placeholder": "Choose a Username"})
+                           validators=[
+                               InputRequired('Please Enter your Email'),
+                               checkForJunk, isUser
+                           ], render_kw={
+                               "placeholder": "Choose a Username"})
 
     password = PasswordField("Password",
                              validators=[
@@ -61,8 +64,10 @@ class Register(FlaskForm):
 
     password2 = PasswordField("Confirm Password",
                               validators=[
-                                  InputRequired('Please Re-Enter your Password'),
-                                  EqualTo('password', 'Password Does Not Match')],
+                                  InputRequired(
+                                      'Please Re-Enter your Password'),
+                                  EqualTo('password', 'Password D\
+oes Not Match')],
                               render_kw={"placeholder": "******"})
 
     gender = RadioField("Gender",

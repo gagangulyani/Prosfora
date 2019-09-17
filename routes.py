@@ -28,14 +28,17 @@ def register():
         if form.validate_on_submit():
             flash('Please Login to Continue')
             return redirect('login')
-        else:
-            return render_template('register.html', form=form)
+        
     return render_template('register.html', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     form = Login()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            return redirect('/', 302)
+
     return render_template('login.html', form=form)
 
 

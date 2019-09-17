@@ -1,5 +1,4 @@
 import pymongo
-from bson.json_util import dumps
 import gridfs
 
 
@@ -20,7 +19,7 @@ class Database(object):
 
     @staticmethod
     def find(collection, query):
-        return dumps(Database.DATABASE[collection].find(query))
+        return list(Database.DATABASE[collection].find(query))
 
     @staticmethod
     def count(collection, query={}):
@@ -49,10 +48,20 @@ class Database(object):
 
     @staticmethod
     def saveFile(binaryObj):
+        """
+        Takes binaryObj and stores it in MongoDB using GridFS 
+
+        Returns ObjectID of the stored file
+        """
         return FS.put(binaryObj)
 
     @staticmethod
     def loadFile(_id):
+        """
+        Takes ObjectID and retrieves it from MongoDB using GridFS 
+
+        Returns stored file
+        """
         out = FS.get(_id)
         return {'file': out,
                 'created_at': out.upload_date}

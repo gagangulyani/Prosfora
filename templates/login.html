@@ -1,6 +1,7 @@
 {% extends "common.html" %}
 {% block content %}
 <div class=content-section>
+    {{super()}}
     <form method="POST" action="">
         {{ form.hidden_tag() }}
         <fieldset class=form-group>
@@ -9,10 +10,17 @@
                 {{ form.email.label(class="form-control-label") }}
                 {{ form.email(class="form-control form-control-lg") }}
             </div>
+            {% for error in form.email.errors %}
+                <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
+            {% endfor %}
             <div class="form-group">
                 {{ form.password.label(class="form-control-label") }}
                 {{ form.password(class="form-control form-control-lg") }}
             </div>
+
+            {% for error in form.password.errors %}
+                <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
+            {% endfor %}
         </fieldset>
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}

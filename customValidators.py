@@ -1,6 +1,7 @@
 from string import punctuation
 from wtforms.validators import ValidationError
 from models.user import User
+from models.database import Database
 import re
 
 
@@ -52,6 +53,7 @@ def StrongPassword(form, field):
 
 
 def isUser(form, field, login = False):
+    Database.initialize('Prosfora')
     email = field.data
     isEmail = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
@@ -60,8 +62,12 @@ def isUser(form, field, login = False):
 
     if isEmail.fullmatch(email):
         isUser_ = User.isUser(email = email)
+        email = True
     else:
         isUser_ = User.isUser(username = email)
+        email = False
+
+    print(isUser_)
 
     if login:
         if not isUser_:
@@ -69,8 +75,12 @@ def isUser(form, field, login = False):
 
     else:
         if isUser_:
-            raise ValidationError('Account already exists!')
+            if email:
+                raise ValidationError('Email Already Taken')
+            raise ValidationError('Username Already Taken')
 
+def isUser2(form, field):
+    isUser(form, field, login=True)
 
 
 def Age(form, field):
