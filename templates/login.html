@@ -2,24 +2,21 @@
 {% block content %}
 <div class=content-section>
     {{super()}}
+    <h1 class="display-4 mb-4">Login</h1>
     <form method="POST" action="">
         {{ form.hidden_tag() }}
-        <fieldset class=form-group>
-            <legend class="border-bottom mb-4">Log In</legend>
-            <div class="form-group">
-                {{ form.email(class="form-control form-control-lg") }}
-            </div>
-            {% for error in form.email.errors %}
-                <div class="ml-3 mb-3 text-danger"> {{ error }} </div>
-            {% endfor %}
-            <div class="form-group">
-                {{ form.password(class="form-control form-control-lg") }}
-            </div>
-
-            {% for error in form.password.errors %}
-                <div class="ml-3 mb-3 text-danger"> {{ error }} </div>
-            {% endfor %}
-        </fieldset>
+        <div class="form-group">
+            {{ form.email(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.email.errors %}
+        <div class="ml-3 mb-3 text-danger"> {{ error }} </div>
+        {% endfor %}
+        <div class="form-group">
+            {{ form.password(class="form-control form-control-lg") }}
+        </div>
+        {% for error in form.password.errors %}
+        <div class="ml-3 mb-3 text-danger"> {{ error }} </div>
+        {% endfor %}
         <div class="form-group">
             {{ form.submit(class="btn btn-outline-info") }}
         </div>
@@ -33,4 +30,4 @@
         </small>
     </div>
 </div>
-{% endblock content%} 
+{% endblock content%}

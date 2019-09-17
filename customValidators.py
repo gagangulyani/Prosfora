@@ -81,15 +81,3 @@ def isUser(form, field, login = False):
 
 def isUser2(form, field):
     isUser(form, field, login=True)
-
-
-def Age(form, field):
-    age = field.data
-
-    if age:
-        
-        if age in range(5,13):
-            raise ValidationError("You must be Older than 13 \
-years old to Register")
-        elif age < 5 or age > 115:
-            raise ValidationError("Invalid Age")

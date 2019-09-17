@@ -15,11 +15,15 @@ class Database(object):
 
     @staticmethod
     def insert(collection, data):
-        Database.DATABASE[collection].insert(data)
+        return Database.DATABASE[collection].insert(data)
 
     @staticmethod
     def find(collection, query):
         return list(Database.DATABASE[collection].find(query))
+
+    @staticmethod
+    def find_one(collection, query):
+        return Database.DATABASE[collection].find_one(query)
 
     @staticmethod
     def count(collection, query={}):
