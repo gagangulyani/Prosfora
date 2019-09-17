@@ -1,6 +1,7 @@
 from string import punctuation
 from wtforms.validators import ValidationError
 from models.user import User
+import re
 
 
 def checkForJunk(form=None, field=None, usrtext=None):
