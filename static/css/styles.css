@@ -273,3 +273,7 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
 
 
 }
+
+#gender li{
+    list-style: none;
+}

@@ -54,7 +54,7 @@ class Register(FlaskForm):
     password = PasswordField("Password",
                              validators=[
                                  InputRequired('Please Enter your Password'),
-                                 Length(min=6, max=16,
+                                 Length(min=8, max=16,
                                         message='Password Must be 8-16\
  Characters Long'), StrongPassword],
                              render_kw={"placeholder": "******"})
