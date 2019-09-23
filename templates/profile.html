@@ -5,13 +5,19 @@
     <div class="coverPhoto">
         <div class="container">
             <div class="userInfo row">
-                <div class="profilePic col-12 col-sm-6 d-flex justify-content-center">
-                    <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture" class="my-5 proPic mx-auto" title="{{current_user.name}}">
+                <div class="profilePic col-12 col-md-6 d-flex justify-content-center">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="my-5">
+                                <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture" class="proPic mx-auto d-block img-fluid" title="{{current_user.name}}">
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="col-12 col-sm-6 mt-2 mt-sm-5">
-                    <div class="row">
-                        <div class="col-12 mt-0 mt-sm-5 text-center text-sm-left">
+                <div class="col-12 col-md-6 mt-2 mt-md-5">
+                    <div class="row pb-5">
+                        <div class="col-12 mt-0 mt-md-5 text-center text-md-left">
                             <p class="userBannerInfo">{{current_user.name}}</p>
                             <br>
                             <p class="userBannerInfo">{{current_user.username}}</p>

@@ -289,7 +289,7 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    height: 65vh;
+    min-height: 60vh;
 }
 .userBannerInfo{
     color:white;
@@ -298,15 +298,13 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
     display: inline-block;
     padding: 0.2em;
 }
-.profilePic{
-    width: 50%;
-    height: auto;
-}
+
 .proPic{
     border: 4px solid white;
     box-shadow: 1px 1px 8px black;
     border-radius: 50%;
-    width: 50%;
+    width: 60%;
+    /*height: 50%*/
 }
 .userInfo{
     /*z-index: 8;*/
