@@ -3,7 +3,8 @@ Prosfora Routes
 
 """
 from flask import (Flask, render_template,
-                   jsonify, request, session, redirect, flash)
+                   jsonify, request, session,
+                   redirect, flash)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 import functools

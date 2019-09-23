@@ -283,3 +283,18 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
 #gender li{
     list-style: none;
 }
+
+.coverPhoto{
+    background-image: url('/static/images/profile/coverPhoto.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.profilePic img{
+    width: 20%;
+    border-radius: 50%;
+}
+.userInfo{
+    /*z-index: 8;*/
+}
