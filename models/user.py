@@ -46,6 +46,8 @@ class User:
                  verified=[False, None],
                  ProfileClicks=0,
                  isPublic=True,
+                 totalFollowers = 0,
+                 totalFollowing = 0,
                  _id=None,
                  currentSessions=[],
                  active=True):
@@ -57,6 +59,8 @@ class User:
         self.gender = gender
         self.email = email
         self.country = country
+        self.totalFollowers = totalFollowers
+        self.totalFollowing = totalFollowing
         self.bio = bio
         self.totalDownloads = totalDownloads
         self.totalLikes = totalLikes
@@ -85,6 +89,8 @@ class User:
             "totalLikes": self.totalLikes,
             "followers": self.followers,
             "following": self.following,
+            "totalFollowers": self.totalFollowers,
+            "totalFollowing": self.totalFollowing,
             "profilePicture": self.profilePicture,
             "coverPhoto": self.coverPhoto,
             "verified": self.verified,
@@ -107,6 +113,8 @@ class User:
             totalLikes=jsonObj.get("totalLikes"),
             followers=jsonObj.get("followers"),
             following=jsonObj.get("following"),
+            totalFollowers=jsonObj.get("totalFollowers"),
+            totalFollowing=jsonObj.get("totalFollowing"),
             profilePicture=jsonObj.get("profilePicture"),
             coverPhoto=jsonObj.get("coverPhoto"),
             verified=jsonObj.get("verified"),

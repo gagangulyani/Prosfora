@@ -289,16 +289,19 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    min-height: 60vh;
+    min-height: 90vh;
 }
 .userBannerInfo:nth-of-type(1){
     font-weight: bold;
     font-size: 2.2em;
 }
+.userBannerInfo:nth-child(5){
+    font-size: 1.5em;
+}
 .userBannerInfo{
     color:white;
     font-size: 2em;
-    background-color: black;
+    background-color: rgba(0,0,0,0.9);
     display: inline-block;
     padding: 0.2em;
 }
@@ -315,4 +318,14 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
 }
 .btn-outline-light{
     background-color: rgba(0,0,0,0.8);
+}
+.follow-list-link, .follow-list-link:hover{
+    text-decoration: none;
+    color:white;
+}
+.follow-list-link:hover h1{
+    transition: all 0.5s ease;
+    text-shadow: 0px 10px 10px black;
+    background-color: rgba(0,0,0,0.4);
+    border-radius: 2em;
 }

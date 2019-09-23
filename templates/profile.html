@@ -37,6 +37,22 @@
                     </div>
                 </div>
             </div>
+            <div>
+                <div class="row p-1">
+                    <div class="col-6 text-center">
+                        <a class = 'follow-list-link' href="/profile/{{current_user.username}}/followers">
+                            <h1 class="h2 p-2">Followers</h1>
+                            <p class="">{{userInfo.totalFollowers}}</p>
+                        </a>
+                    </div>
+                    <div class="col-6 text-center">
+                        <a class = 'follow-list-link' href="/profile/{{current_user.username}}/following">
+                            <h1 class="h2 p-2">Following</h1>
+                            <p class="">{{userInfo.totalFollowing}}</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
