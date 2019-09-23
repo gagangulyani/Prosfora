@@ -12,7 +12,9 @@ from MongoLogin import *
 from forms import Login, Register
 from models.user import User
 from uuid import uuid4
-from flask_login import login_user, current_user, logout_user, login_required
+from flask_login import (login_user, current_user,
+                         logout_user, login_required,
+                         LoginManager)
 import base64
 
 app = Flask(__name__)
@@ -20,8 +22,15 @@ app.config['SECRET_KEY'] = str(uuid4())
 
 SECRET_KEY_SESSION = None
 
+login_manager = LoginManager()
+# Added this line fixed the issue.
+login_manager.init_app(app)
+login_manager.login_view = 'users.login'
+
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+login_manager.init_app(app)
+
 
 @app.route('/')
 def index():
@@ -70,15 +79,17 @@ def login():
 
     return render_template('login.html', form=form)
 
+
 @app.route('/profile')
 @app.route('/profile<string:username>')
-def profile(username = None):
+def profile(username=None):
     if username:
         pass
 
     userInfo = {}
 
-    return render_template('profile.html', userInfo = userInfo)
+    return render_template('profile.html', userInfo=userInfo)
+
 
 @app.route('/explore')
 def explore():
