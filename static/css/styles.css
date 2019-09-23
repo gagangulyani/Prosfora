@@ -291,6 +291,10 @@ body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > d
     background-position: center;
     min-height: 60vh;
 }
+.userBannerInfo:nth-of-type(1){
+    font-weight: bold;
+    font-size: 2.2em;
+}
 .userBannerInfo{
     color:white;
     font-size: 2em;

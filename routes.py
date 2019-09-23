@@ -7,6 +7,7 @@ from flask import (Flask, render_template,
                    redirect, flash)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
+from flask_paranoid import Paranoid
 from forms import Login, Register
 from customValidators import checkForJunk
 from models.user import User
@@ -38,12 +39,15 @@ def load_user(userID):
 
 
 login_manager.init_app(app)
+login_manager.session_protection = "strong"
 login_manager.login_view = 'login'
 login_manager.login_message_category = "info"
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
+paranoid = Paranoid(app)
 
+paranoid.redirect_view = '/'
 
 ##################################################
 # Assigning Methods to class
@@ -69,6 +73,9 @@ def index():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect('/',302)
+    
     form = Register()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -89,7 +96,9 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    global SECRET_KEY_SESSION
+    if current_user.is_authenticated:
+        return redirect('/',302)
+
     form = Login()
     if request.method == 'POST':
         result = form.validate()
@@ -115,9 +124,15 @@ def profile(username=None):
     if username and not checkForJunk(
             usrtext=username) and not (len(username) > 20):
         userInfo = User.findUser(username=username)
-        return render_template('profile.html', userInfo=userInfo)
+        if userInfo:
+            userInfo = User.toClass(userInfo)
+            return render_template('profile.html', userInfo=userInfo)
+        else:
+            return 404
+
     elif username is None and current_user.is_authenticated:
         return redirect(f'/profile/{current_user.username}')
+        
     else:
         return 'hi'
 
