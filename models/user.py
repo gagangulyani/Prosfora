@@ -124,8 +124,8 @@ class User:
             return result
 
     @staticmethod
-    def updateUserInfo(objID, updatedUserData):
-        Database.update(User.COLLECTION, {'_id': objID}, updatedUserData)
+    def updateUserInfo(_id, updatedUserData):
+        Database.update(User.COLLECTION, {'_id': _id}, updatedUserData)
 
     @staticmethod
     def login(username, password):

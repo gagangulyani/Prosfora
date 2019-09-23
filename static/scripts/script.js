@@ -1,11 +1,3 @@
-if (loggedIn){
-    $('.login').remove();
-    $('.register').remove();
-    $('.logout').toggleClass('d-none');
-    $('.submit-a-photo').css('background', 'rgba(0,0,0,0.8)');
-    $('.submit-a-photo').css("color", 'white');
-    $('.joinNow').text('Now')
-}
 var imgs = new Array(
 "avel-chuklanov-rWazZf6qDFM-unsplash.jpg",
 "celine-druguet-ttzoSPBYdrI-unsplash.jpg",

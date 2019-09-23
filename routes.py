@@ -23,12 +23,7 @@ moment = Moment(app)
 
 @app.route('/')
 def index():
-    loggedIn = 'false'
-    if session.get('name'):
-        loggedIn = 'true'
-
-    return render_template('index.html',
-                           loggedIn=loggedIn)
+    return render_template('index.html')
 
 
 @app.route('/register', methods=['GET', 'POST'])
