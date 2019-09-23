@@ -83,9 +83,6 @@
     {% endblock %}
     {% block scripts %}
     {{super()}}
-    <script>
-        var loggedIn = {{loggedIn}};
-    </script>
     <script src="{{url_for('static', filename = 'scripts/script.js')}}"></script>
     {{ moment.include_moment() }}
     {% endblock %}
