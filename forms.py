@@ -37,11 +37,7 @@ class Login(FlaskForm):
             return None
         else:
             password = self.password.data
-            isEmail = re.compile(r"[^@]+@[^@]+\.[^@]+")
-            if isEmail.fullmatch(self.email.data):
-                result = User.checkPassword(password, email=self.email.data)
-            else:
-                result = User.checkPassword(password, username=self.email.data)
+            result = User.login(self.email.data, self.password.data)
 
         if result is None:
             self.email.errors = ['Account Not Found!']
@@ -52,7 +48,7 @@ class Login(FlaskForm):
             return False
 
         else:
-            return True
+            return result
 
 class Register(FlaskForm):
     name = StringField(validators=[

@@ -51,7 +51,6 @@ def StrongPassword(form, field):
 
         raise ValidationError(message)
 
-
 def isUser(form, field, login = False):
     Database.initialize('Prosfora')
     email = field.data

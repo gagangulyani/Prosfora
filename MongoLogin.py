@@ -1,8 +1,8 @@
-# from models.encryption import Encrypt, Decrypt
-# from models.user import User
+from models.encryption import Encrypt, Decrypt
+from models.user import User
 
-# def encryptObjID(objID):
-#     return Encrypt(str(objID))
+def encSession(s):
+    return Encrypt(s)
 
-# def decryptObjID(cu_):
-#     pass
+def decSession(s,k):
+    return Decrypt(s,k)

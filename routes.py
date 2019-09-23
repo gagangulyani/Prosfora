@@ -6,20 +6,29 @@ from flask import (Flask, render_template,
                    jsonify, request, session, redirect, flash)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-# from MongoLogin import *
+import functools
+from MongoLogin import *
 from forms import Login, Register
 from models.user import User
 from uuid import uuid4
+import base64
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = str(uuid4())
+
+SECRET_KEY_SESSION = None
+
 bootstrap = Bootstrap(app)
 moment = Moment(app)
 
-
 @app.route('/')
 def index():
-    return render_template('index.html')
+    loggedIn = 'false'
+    if session.get('name'):
+        loggedIn = 'true'
+
+    return render_template('index.html',
+                           loggedIn=loggedIn)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -44,24 +53,25 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    global SECRET_KEY_SESSION
     form = Login()
     if request.method == 'POST':
-        if form.validate():
-            result = User.login(form.email.data, form.password.data)
-            if result is None:
-                flash('Account Does not Exist!')
-            elif result is False:
-                flash('Invalid Password!')
-
+        result = form.validate()
+        if result:
             # if result is non zero
             # (True)
-            # session.update(result)
-            flash('Logged In!')
-            session.update({'name': result.get('name')})
+            uncSession = str({'name': result.get('name')})
+
+            encSessionData, SECRET_KEY_SESSION = encSession(
+                uncSession
+            )
+            print(SECRET_KEY_SESSION)
+            print(encSessionData)
+            session.update({'cu': encSessionData})
+            flash(f'Hello {result.get("name")}')
             return redirect('/', 302)
 
     return render_template('login.html', form=form)
-
 
 @app.route('/explore')
 def explore():
@@ -70,7 +80,10 @@ def explore():
 
 @app.route('/logout')
 def logout():
-    return render_template('logout.html')
+    if session.get('name'):
+        session.pop('name')
+        flash('Logged Out Successfully!')
+    return redirect('/', 302)
 
 
 @app.route('/search')

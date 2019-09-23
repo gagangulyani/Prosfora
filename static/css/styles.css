@@ -7,7 +7,13 @@ html {
 .w-80 {
     width: 80%;
 }
-
+.navbar{
+    z-index: 5;
+}
+.alert{
+    z-index: 4;
+    /*position: fixed;*/
+}
 .form-inline {
     width: 100%;
     border-radius: 2em;
