@@ -55,18 +55,28 @@ def login():
         if result:
             # if result is non zero
             # (True)
-            uncSession = str({'name': result.get('name')})
+            # uncSession = str({'name': result.get('name')})
 
-            encSessionData, SECRET_KEY_SESSION = encSession(
-                uncSession
-            )
-            print(SECRET_KEY_SESSION)
-            print(encSessionData)
-            session.update({'cu': encSessionData})
+            # encSessionData, SECRET_KEY_SESSION = encSession(
+            #     uncSession
+            # )
+            # print(SECRET_KEY_SESSION)
+            # print(encSessionData)
+            # session.update({'cu': encSessionData})
             flash(f'Hello {result.get("name")}')
             return redirect('/', 302)
 
     return render_template('login.html', form=form)
+
+@app.route('/profile')
+@app.route('/profile<string:username>')
+def profile(username = None):
+    if username:
+        pass
+
+    userInfo = {}
+
+    return render_template('profile.html', userInfo = userInfo)
 
 @app.route('/explore')
 def explore():
