@@ -59,7 +59,7 @@ def StrongPassword(form, field):
 
 def isUser(form, field, login=False):
     Database.initialize('Prosfora')
-    email = field.data
+    email = field.data.lower()
     isEmail = re.compile(r"[^@]+@[^@]+\.[^@]+")
 
     if len(email) > 100:

@@ -4,9 +4,6 @@ html {
     padding: 0;
 }
 
-.w-80 {
-    width: 80%;
-}
 .navbar{
     z-index: 5;
 }
@@ -153,6 +150,12 @@ html {
     font-size: 6em;
     color: white;
     text-decoration: none;
+}
+
+@media screen and (min-width: 991px) {
+    .w-80 {
+        width: 80%;
+    }
 }
 
 @media screen and (max-width: 991px) {

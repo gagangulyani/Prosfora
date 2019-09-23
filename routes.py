@@ -32,8 +32,8 @@ login_manager = LoginManager()
 @login_manager.user_loader
 def load_user(userID):
     userObj = User.findUser(userID=userID)
+    print("[FLASK-LOGIN] \nload_user()-> userID = ", userID)
     if not userObj:
-        print("[FLASK-LOGIN] \nload_user()-> userID = ", userID)
         return None
     return User.toClass(userObj)
 
@@ -80,16 +80,16 @@ def register():
     if request.method == 'POST':
         if form.validate_on_submit():
             user = User(
-                name=form.name.data,
+                name=form.name.data.title(),
                 userID=str(uuid4())[::-1],
-                username=form.username.data,
+                username=form.username.data.lower(),
                 password=form.password.data,
-                email=form.email.data,
+                email=form.email.data.lower(),
                 gender=form.gender.data
             )
             user.saveUser()
-            flash('Please Login to Continue')
-            return redirect('login')
+            login_user(user)
+            return redirect('/',302)
 
     return render_template('register.html', form=form)
 
@@ -132,7 +132,7 @@ def profile(username=None):
 
     elif username is None and current_user.is_authenticated:
         return redirect(f'/profile/{current_user.username}')
-        
+
     else:
         return 'hi'
 
