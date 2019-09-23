@@ -1,8 +1,17 @@
-from models.encryption import Encrypt, Decrypt
 from models.user import User
 
-def encSession(s):
-    return Encrypt(s)
+def is_active(self):
+    # Here you should write whatever the code is
+    # that checks the database if your user is active
+    return self.active
 
-def decSession(s,k):
-    return Decrypt(s,k)
+@staticmethod
+def is_authenticated():
+    return True
+
+@staticmethod
+def is_anonymous():
+    return False
+
+def get_id(self):
+    return self.userID

@@ -4,13 +4,32 @@
     {{super()}}
     <div class="coverPhoto">
         <div class="container">
-            <div class="userInfo d-flex justify-content-center">
-                <div class="profilePic">
-                    <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture" class="my-5" title="Name">
+            <div class="userInfo row">
+                <div class="profilePic col-12 col-sm-6 d-flex justify-content-center">
+                    <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture" class="my-5 proPic mx-auto" title="{{current_user.name}}">
                 </div>
-                <p>Name [Username : user_name]</p>
-                <p>Email Address</p>
-                <p>Gender : Male</p>
+
+                <div class="col-12 col-sm-6 mt-2 mt-sm-5">
+                    <div class="row">
+                        <div class="col-12 mt-0 mt-sm-5 text-center text-sm-left">
+                            <p class="userBannerInfo">{{current_user.name}}</p>
+                            <br>
+                            <p class="userBannerInfo">{{current_user.username}}</p>
+                            <br>
+                            {% if current_user.gender == 'M' %}
+                                <p class="userBannerInfo">MALE</p>
+                            {% elif current_user.gender == 'F'%}
+                                <p class="userBannerInfo">FEMALE</p>
+                            {% else %}
+                            {% endif %}
+                            <br>
+                            {% if current_user.is_authenticated %}
+                            <a href="/settings" class="btn btn-outline-light">SETTINGS</a>
+                            {% endif %}
+                            <a href="#" class="btn btn-success">FOLLOW</a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -3,34 +3,64 @@ Prosfora Routes
 
 """
 from flask import (Flask, render_template,
-                   jsonify, request, session,
+                   jsonify, request,
                    redirect, flash)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-import functools
-from MongoLogin import *
 from forms import Login, Register
+from customValidators import checkForJunk
 from models.user import User
+from models.database import Database
+from MongoLogin import *
 from uuid import uuid4
 from flask_login import (login_user, current_user,
-                         logout_user, login_required,
-                         LoginManager)
-import base64
+                         logout_user, LoginManager,
+                         login_required)
 
 app = Flask(__name__)
+
 app.config['SECRET_KEY'] = str(uuid4())
 
-SECRET_KEY_SESSION = None
+# INIT DATABASE
+Database.initialize('Prosfora')
 
+# INIT Login Manager
 login_manager = LoginManager()
-# Added this line fixed the issue.
+
+
+@login_manager.user_loader
+def load_user(userID):
+    userObj = User.findUser(userID=userID)
+    if not userObj:
+        print("[FLASK-LOGIN] \nload_user()-> userID = ", userID)
+        return None
+    return User.toClass(userObj)
+
+
 login_manager.init_app(app)
-login_manager.login_view = 'users.login'
+login_manager.login_view = 'login'
+login_manager.login_message_category = "info"
 
 bootstrap = Bootstrap(app)
 moment = Moment(app)
-login_manager.init_app(app)
 
+
+##################################################
+# Assigning Methods to class
+# [Explicitly]
+##################################################
+User.is_active = is_active
+User.is_authenticated = is_authenticated
+User.is_anonymous = is_anonymous
+User.get_id = get_id
+User.load_user = classmethod(load_user)
+
+
+##################################################
+##################################################
+# ROUTES
+##################################################
+##################################################
 
 @app.route('/')
 def index():
@@ -64,31 +94,32 @@ def login():
     if request.method == 'POST':
         result = form.validate()
         if result:
-            # if result is non zero
-            # (True)
-            # uncSession = str({'name': result.get('name')})
-
-            # encSessionData, SECRET_KEY_SESSION = encSession(
-            #     uncSession
-            # )
-            # print(SECRET_KEY_SESSION)
-            # print(encSessionData)
-            # session.update({'cu': encSessionData})
-            flash(f'Hello {result.get("name")}')
+            login_user(
+                User(
+                    _id=result.get('_id'),
+                    name=result.get('name'),
+                    userID=result.get('userID'),
+                    username=result.get('username'),
+                    email=result.get('email'),
+                    gender=result.get('gender')
+                ))
             return redirect('/', 302)
 
     return render_template('login.html', form=form)
 
 
 @app.route('/profile')
-@app.route('/profile<string:username>')
+@app.route('/profile/<string:username>')
 def profile(username=None):
-    if username:
-        pass
-
     userInfo = {}
-
-    return render_template('profile.html', userInfo=userInfo)
+    if username and not checkForJunk(
+            usrtext=username) and not (len(username) > 20):
+        userInfo = User.findUser(username=username)
+        return render_template('profile.html', userInfo=userInfo)
+    elif username is None and current_user.is_authenticated:
+        return redirect(f'/profile/{current_user.username}')
+    else:
+        return 'hi'
 
 
 @app.route('/explore')
@@ -97,10 +128,9 @@ def explore():
 
 
 @app.route('/logout')
+@login_required
 def logout():
-    if session.get('name'):
-        session.pop('name')
-        flash('Logged Out Successfully!')
+    logout_user()
     return redirect('/', 302)
 
 

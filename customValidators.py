@@ -8,7 +8,12 @@ import re
 def checkForJunk(form=None, field=None, usrtext=None):
     punct = punctuation.replace('_', '')
     if not field:
-        field = {'data': usrtext}
+        class a:
+            def __init__(self, data):
+                self.data = data
+
+        field = a(usrtext)
+
     for i in field.data:
         if i in punct:
             if usrtext:
@@ -51,7 +56,8 @@ def StrongPassword(form, field):
 
         raise ValidationError(message)
 
-def isUser(form, field, login = False):
+
+def isUser(form, field, login=False):
     Database.initialize('Prosfora')
     email = field.data
     isEmail = re.compile(r"[^@]+@[^@]+\.[^@]+")
@@ -60,10 +66,10 @@ def isUser(form, field, login = False):
         raise ValidationError('Email or Username is too lengthy!')
 
     if isEmail.fullmatch(email):
-        isUser_ = User.isUser(email = email)
+        isUser_ = User.isUser(email=email)
         email = True
     else:
-        isUser_ = User.isUser(username = email)
+        isUser_ = User.isUser(username=email)
         email = False
 
     print(isUser_)
@@ -77,6 +83,7 @@ def isUser(form, field, login = False):
             if email:
                 raise ValidationError('Email Already Taken')
             raise ValidationError('Username Already Taken')
+
 
 def isUser2(form, field):
     isUser(form, field, login=True)

@@ -22,19 +22,19 @@ class User:
             following -> Array of UserIDs
             profilePicture -> Profile Picture of the User
             coverPhoto -> Cover Photo of the User
-            isActive -> is User's account activated
+            verified -> is User's account activated
             ProfileClicks -> Number of Profile Clicks
             currentSessions -> Array of Encrypted User ObjectID
             isPublic -> is User's profile Public
     """
 
     def __init__(self,
-                 userID,
                  name,
                  username,
-                 password,
                  email,
                  gender,
+                 userID=None,
+                 password=None,
                  country=None,
                  bio="",
                  totalDownloads=0,
@@ -43,11 +43,12 @@ class User:
                  following=[],
                  profilePicture=None,
                  coverPhoto=None,
-                 isActive=[False, None],
+                 verified=[False, None],
                  ProfileClicks=0,
                  isPublic=True,
                  _id=None,
-                 currentSessions=[]):
+                 currentSessions=[],
+                 active=True):
 
         self.userID = userID
         self.name = name
@@ -63,11 +64,12 @@ class User:
         self.following = following
         self.profilePicture = profilePicture
         self.coverPhoto = coverPhoto
-        self.isActive = isActive
+        self.verified = verified
         self.ProfileClicks = ProfileClicks
         self.isPublic = isPublic
         self.currentSessions = currentSessions
         self._id = _id
+        self.active = active
 
     def toJson(self):
         return {
@@ -85,11 +87,32 @@ class User:
             "following": self.following,
             "profilePicture": self.profilePicture,
             "coverPhoto": self.coverPhoto,
-            "isActive": self.isActive,
+            "verified": self.verified,
             "ProfileClicks": self.ProfileClicks,
             "currentSessions": self.currentSessions,
             "isPublic": self.isPublic
         }
+
+    @staticmethod
+    def toClass(jsonObj):
+        return User(
+            userID=jsonObj.get("userID"),
+            name=jsonObj.get("name"),
+            username=jsonObj.get("username"),
+            email=jsonObj.get("email"),
+            country=jsonObj.get("country"),
+            bio=jsonObj.get("bio"),
+            gender=jsonObj.get("gender"),
+            totalDownloads=jsonObj.get("totalDownloads"),
+            totalLikes=jsonObj.get("totalLikes"),
+            followers=jsonObj.get("followers"),
+            following=jsonObj.get("following"),
+            profilePicture=jsonObj.get("profilePicture"),
+            coverPhoto=jsonObj.get("coverPhoto"),
+            verified=jsonObj.get("verified"),
+            ProfileClicks=jsonObj.get("ProfileClicks"),
+            currentSessions=jsonObj.get("currentSessions"),
+            isPublic=jsonObj.get("isPublic"))
 
     def saveUser(self):
         return Database.insert(User.COLLECTION, self.toJson())
@@ -113,12 +136,15 @@ class User:
         return Database.find_one(User.COLLECTION, {'_id': _id})
 
     @staticmethod
-    def findUser(email=None, username=None):
+    def findUser(email=None, username=None, userID=None):
         if email:
             result = Database.find_one(User.COLLECTION, {'email': email})
 
-        if username:
+        elif username:
             result = Database.find_one(User.COLLECTION, {'username': username})
+
+        elif userID:
+            result = Database.find_one(User.COLLECTION, {'userID': userID})
 
         if result:
             return result
@@ -139,21 +165,6 @@ class User:
             if check_password_hash(user.get('password'), password):
                 return user
             return False
-
-    @staticmethod
-    def createSession(_id, encryptedData):
-        user = User.find(_id)
-        if user:
-            user.update(
-                {'currentSessions': user.get('currentSessions').append(
-                    encryptedData)})
-            User.updateUserInfo(user.get('_id'), user)
-            return True
-        return False
-
-    @staticmethod
-    def findSession(session):
-        pass
 
     @staticmethod
     def isUser(email=None, username=None):
