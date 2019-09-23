@@ -11,6 +11,7 @@ from MongoLogin import *
 from forms import Login, Register
 from models.user import User
 from uuid import uuid4
+from flask_login import login_user, current_user, logout_user, login_required
 import base64
 
 app = Flask(__name__)
