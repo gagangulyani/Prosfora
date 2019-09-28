@@ -4,13 +4,15 @@ html {
     padding: 0;
 }
 
-.navbar{
+.navbar {
     z-index: 5;
 }
-.alert{
+
+.alert {
     z-index: 4;
     /*position: fixed;*/
 }
+
 .form-inline {
     width: 100%;
     border-radius: 2em;
@@ -152,6 +154,12 @@ html {
     text-decoration: none;
 }
 
+.card,
+.card-img-top {
+    height: 25rem !important;
+    width: 20rem !important;
+}
+
 @media screen and (min-width: 991px) {
     .w-80 {
         width: 80%;
@@ -162,33 +170,46 @@ html {
     #heading {
         font-size: 4em;
     }
+
     .site-main-banner,
     .site-space-background {
         min-height: 55vh !important;
     }
 
-    .img-logo{
-        width:50%!important;
+    .img-logo {
+        width: 50% !important;
     }
 
-    .display-4{
+    .card,
+    .card-img-top {
+        height: 40rem !important;
+        width: 35rem !important;
+    }
+
+    .display-4 {
         background-color: white;
         line-height: 1.4em;
     }
 
-    body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a{
-        color:#22AADD!important;
+    body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a {
+        color: #22AADD !important;
 
-        text-shadow: none!important:;
-        background-color: none!important:;
-        padding: initial!important:;
-        border-radius: initial!important:;
+        text-shadow: none !important:;
+        background-color: none !important:;
+        padding: initial !important:;
+        border-radius: initial !important:;
     }
 }
 
 @media screen and (max-width: 768px) {
     #heading {
         font-size: 3.5em;
+    }
+
+    .card,
+    .card-img-top {
+        height: 35rem !important;
+        width: 30rem !important;
     }
 }
 
@@ -200,13 +221,29 @@ html {
     .searchbar:hover>.search_input {
         width: 80%;
     }
+
     .site-main-banner,
     .site-space-background {
         min-height: 40vh !important;
     }
 
     .bg-cont {
-        background: white!important;
+        background: white !important;
+    }
+
+    .card,
+    .card-img-top {
+        height: 30rem !important;
+        width: 25rem !important;
+    }
+}
+
+@media screen and (max-width: 461px) {
+
+    .card,
+    .card-img-top {
+        height: 25rem !important;
+        width: 20rem !important;
     }
 }
 
@@ -246,89 +283,183 @@ html {
     transform: translateY(-50%);
 }
 
-.img-logo{
-    width:65%;
+.img-logo {
+    width: 65%;
     vertical-align: middle;
 }
 
-.navbar{
-    box-shadow: 1px 1px 10px rgba(0,0,0,0.5);
-}
-body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a{
-    text-decoration: none;
-    color: black;
-    transition: all 0.5s ease; 
+.navbar {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
 }
 
-body > div.landing-2.bg-cont > div > div > div.col-12.col-lg-6.mt-sm-5 > div > div > h1 a:hover{
+body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a {
+    text-decoration: none;
+    color: black;
+    transition: all 0.5s ease;
+}
+
+body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hover {
     text-shadow: 1px 1px 8px white,
-                1px 1px 8px #22AADD;
-    background-color: rgba(255,255,255,0.7);
+        1px 1px 8px #22AADD;
+    background-color: rgba(255, 255, 255, 0.7);
     padding: 0.3em;
     border-radius: 2em;
 }
 
-.landing-3{
+.landing-3 {
     min-height: 100vh;
-    color:white;
+    color: white;
     background-color: black;
 }
 
-.yellow{
-    color:yellow;
-    border : 3px dashed yellow;
+.yellow {
+    color: yellow;
+    border: 3px dashed yellow;
     padding: 0.3em;
     border-radius: 100%;
 
-
 }
 
-#gender li{
+#gender li {
     list-style: none;
 }
 
-.coverPhoto{
+.coverPhoto {
     background-image: url('/static/images/profile/coverPhoto.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    background-attachment: fixed;
     min-height: 90vh;
 }
-.userBannerInfo:nth-of-type(1){
+
+.userBannerInfo:nth-of-type(1) {
     font-weight: bold;
     font-size: 2.2em;
 }
-.userBannerInfo:nth-child(5){
+
+.userBannerInfo:nth-child(5) {
     font-size: 1.5em;
 }
-.userBannerInfo{
-    color:white;
+
+.userBannerInfo {
+    font-family: 'Comfortaa', cursive;
+    color: white;
     font-size: 2em;
-    background-color: rgba(0,0,0,0.9);
+    text-shadow: 0px 5px 8px black;
+
     display: inline-block;
     padding: 0.2em;
 }
 
-.proPic{
+.userBannerInfo:hover {
+    transition: all 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.proPic {
     border: 4px solid white;
     box-shadow: 1px 1px 8px black;
     border-radius: 50%;
     width: 60%;
     /*height: 50%*/
 }
-.userInfo{
-    /*z-index: 8;*/
+
+.btn-outline-light {
+    background-color: rgba(0, 0, 0, 0.8);
 }
-.btn-outline-light{
-    background-color: rgba(0,0,0,0.8);
-}
-.follow-list-link, .follow-list-link:hover{
+
+.follow-list-link,
+.follow-list-link:hover {
     text-decoration: none;
-    color:white;
+    color: white;
 }
-.follow-list-link:hover h1{
+
+.follow-list-link:hover h1 {
     transition: all 0.5s ease;
     text-shadow: 0px 10px 10px black;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 2em;
+}
+
+.profile-content {}
+
+.cover {
+    width: 100%;
+    height: 100%;
+}
+
+.sexy-font {
+    font-family: 'Lexend Deca', cursive;
+}
+
+/* 
+    Image hover Zoom n’ Rotate effect with Pure CSS
+    https://w3bits.com/css-image-hover-zoom/
+*/
+.card-img-top {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.img-hover-zoom {
+    overflow: hidden;
+    /* Removing this will break the effects */
+}
+
+/* Quick-zoom Container */
+.img-hover-zoom--quick-zoom img {
+    transition: transform .5s ease;
+}
+
+/* The Transformation */
+.card:hover .img-hover-zoom--quick-zoom img {
+    transform: scale(1.2);
+}
+
+.card-img-overlay {
+    top: unset;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.card-img-overlay-down {
+    color: white;
+    margin: auto;
+    padding: auto;
+    background: none;
+    display: none!important;
+}
+
+.card:hover .card-img-overlay-down{
+    display: flex!important;
+}
+
+.card:hover .card-img-overlay:not(.card-img-overlay-down){
+    display: none;
+}
+
+.card-text,
+.card-title {
+    text-shadow: 0px 1px 3px black;
+}
+
+.waveform{
+    display: flex!important;
+}
+.far, .fas{
+    font-size: 1.2em;
+}
+.card-img-overlay-fixed{
+    display: block!important;
+}
+.card-img-overlay-fixed:hover{
+    padding-bottom: 2em;
+}
+.actions{
+    display: none;
+}
+.audio-post:hover .actions{
+    display: inline;
 }

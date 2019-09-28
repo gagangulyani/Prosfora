@@ -1,4 +1,7 @@
 {% extends "common.html" %}
+{% block title%}
+{{" ".join(userInfo.name.split()[:2])}} - {{super()}}
+{% endblock %}
 {% block content %}
 <div class='profile_page'>
     {{super()}}
@@ -14,7 +17,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-12 col-md-6 mt-2 mt-md-5">
                     <div class="row pb-5">
                         <div class="col-12 mt-0 mt-md-5 text-center text-md-left">
@@ -22,36 +24,107 @@
                             <br>
                             <p class="userBannerInfo">{{userInfo.username}}</p>
                             <br>
-                            {% if userInfo.gender == 'M' %}
-                                <p class="userBannerInfo">MALE</p>
-                            {% elif userInfo.gender == 'F'%}
-                                <p class="userBannerInfo">FEMALE</p>
-                            {% else %}
-                            {% endif %}
+                            <p class="userBannerInfo">{{userInfo.country}}</p>
                             <br>
                             {% if current_user.is_authenticated and current_user.userID == userInfo.userID %}
-                            <a href="/settings" class="btn btn-outline-light">SETTINGS</a>
-                            {% endif %}
+                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a>
+                            {% else %}
                             <a href="#" class="btn btn-success">FOLLOW</a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
             </div>
-            <hr>
-            <div>
-                <div class="row p-1">
+            <div class="mx-auto">
+                <div class="row p-1 sexy-font">
                     <div class="col-6 text-center">
-                        <a class = 'follow-list-link' href="/profile/{{current_user.username}}/followers">
+                        <a class='follow-list-link' href="/profile/{{userInfo.username}}/followers">
                             <h1 class="h2 p-2">Followers</h1>
                             <p class="">{{userInfo.totalFollowers}}</p>
                         </a>
                     </div>
                     <div class="col-6 text-center">
-                        <a class = 'follow-list-link' href="/profile/{{current_user.username}}/following">
+                        <a class='follow-list-link' href="/profile/{{userInfo.username}}/following">
                             <h1 class="h2 p-2">Following</h1>
                             <p class="">{{userInfo.totalFollowing}}</p>
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="profile-content sexy-font">
+    <div class="container p-3">
+        <h1 class='h3'>{{userInfo.name.split()[0]}}'s Posts</h1>
+        <div class="row">
+            {# Actual Content #}
+            {# Images #}
+            <div class="col col-lg-4 col-sm-12">
+                <div class="card m-2 mx-auto image-post">
+                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                        <div class="img-hover-zoom img-hover-zoom--quick-zoom">
+                            <img class="card-img-top" src="/static/images/test_images/img (7).jpeg" alt="Card image cap">
+                        </div>
+                        <div class="card-img-overlay card-img-overlay-up pb-3">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </a>
+                    <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
+                        <button class="btn mx-2 btn-outline-light"><i class="fas fa-thumbs-up"></i></button><button class="btn btn-outline-light"><i class="fas fa-thumbs-down"></i></button>
+                    </div>
+                </div>
+            </div>
+            {# Videos #}
+            <div class="col col-lg-4 col-sm-12">
+                <div class="card m-2 mx-auto video-post" onmouseenter="play(this)" onmouseleave="pause(this);">
+                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                        <video class="card-img-top" src="/static/videos/test/tanvi.mp4" allowfullscreen muted></video>
+                        <div class="card-img-overlay card-img-overlay-up pb-3">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                        </div>
+                    </a>
+                    <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
+                        <button class="btn mx-2 btn-outline-light"><i class="fas fa-thumbs-up"></i></button><button class="btn btn-outline-light"><i class="fas fa-thumbs-down"></i></button>
+                    </div>
+                </div>
+            </div>
+            {# Audios #}
+            <div class="col col-lg-4 col-sm-12">
+                <div class="card m-2 mx-auto audio-post">
+                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                        <div class="img-hover-zoom img-hover-zoom--quick-zoom">
+                            <img class="card-img-top" src="/static/images/test_images/img (6).jpeg" alt="Card image cap">
+                        </div>
+                    </a>
+                    <div class="card-img-overlay card-img-overlay-fixed pb-3">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-text"><span class="duration"></span></h6>
+                        <div id="waveform-audio" class= "mb-2"></div>
+                        <div class="actions mt-2">
+                        <span class="text-left">
+                            <button class="btn mx-2 btn-outline-light" onclick="wavesurfer.playPause();">
+                                <i class="far fa-play-circle playPause"></i>
+                            </button>
+                        </span>
+                        <span class="text-right">
+                            <button class="btn mx-2 btn-outline-light">
+                                <i class="fas fa-thumbs-up"></i>
+                            </button>
+                            <button class="btn mx-2 btn-outline-light">
+                                <i class="fas fa-thumbs-down"></i>
+                            </button>
+
+                            <button class="btn mx-2 btn-outline-light">
+                                <i class="fas fa-download"></i>
+                            </button>
+                        </span>
+
+                    </div>
+                    </div>
+                    
                 </div>
             </div>
         </div>

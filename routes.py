@@ -128,14 +128,21 @@ def profile(username=None):
             userInfo = User.toClass(userInfo)
             return render_template('profile.html', userInfo=userInfo)
         else:
-            return 404
+            return redirect('/'), 404, {'Refresh' : '1; url = /'}
 
     elif username is None and current_user.is_authenticated:
         return redirect(f'/profile/{current_user.username}')
 
     else:
-        return 'hi'
+        return redirect('/'), 404, {'Refresh' : '1; url = /'}
 
+@app.route('/profile/<string:username>/followers')
+@app.route('/profile/<string:username>/following')
+def followers(username = None):
+    if not username:
+        return redirect('/'), 404, {'Refresh' : '1; url = /'}
+    # TODO
+    # Display User's follwers and followed by User
 
 @app.route('/explore')
 def explore():
