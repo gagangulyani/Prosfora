@@ -93,7 +93,7 @@
             </div>
             {# Audios #}
             <div class="col col-lg-4 col-sm-12">
-                <div class="card m-2 mx-auto audio-post">
+                <div class="card m-2 mx-auto audio-post">   
                     <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
                         <div class="img-hover-zoom img-hover-zoom--quick-zoom">
                             <img class="card-img-top" src="/static/images/test_images/img (6).jpeg" alt="Card image cap">
@@ -102,7 +102,7 @@
                     <div class="card-img-overlay card-img-overlay-fixed pb-3">
                         <h5 class="card-title">Card title</h5>
                         <h6 class="card-text"><span class="duration"></span></h6>
-                        <div id="waveform-audio" class="mb-2"></div>
+                        <div id="waveform-audio" class="mb-2 audio-file"></div>
                         <div class="actions mt-2">
                             <span class="text-left">
                                 <button class="btn mx-2 btn-outline-light far fa-play-circle playPause" onclick="wavesurfer.playPause();">
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
         </div>
     </div>
 </div>
