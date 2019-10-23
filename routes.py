@@ -4,7 +4,7 @@ Prosfora Routes
 """
 from flask import (Flask, render_template,
                    jsonify, request,
-                   redirect, flash)
+                   redirect)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_paranoid import Paranoid
@@ -74,8 +74,8 @@ def index():
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect('/',302)
-    
+        return redirect('/', 302)
+
     form = Register()
     if request.method == 'POST':
         if form.validate_on_submit():
@@ -89,7 +89,7 @@ def register():
             )
             user.saveUser()
             login_user(user)
-            return redirect('/',302)
+            return redirect('/', 302)
 
     return render_template('register.html', form=form)
 
@@ -97,7 +97,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect('/',302)
+        return redirect('/', 302)
 
     form = Login()
     if request.method == 'POST':
@@ -128,21 +128,23 @@ def profile(username=None):
             userInfo = User.toClass(userInfo)
             return render_template('profile.html', userInfo=userInfo)
         else:
-            return redirect('/'), 404, {'Refresh' : '1; url = /'}
+            return redirect('/'), 404, {'Refresh': '1; url = /'}
 
     elif username is None and current_user.is_authenticated:
         return redirect(f'/profile/{current_user.username}')
 
     else:
-        return redirect('/'), 404, {'Refresh' : '1; url = /'}
+        return redirect('/'), 404, {'Refresh': '1; url = /'}
+
 
 @app.route('/profile/<string:username>/followers')
 @app.route('/profile/<string:username>/following')
-def followers(username = None):
+def followers(username=None):
     if not username:
-        return redirect('/'), 404, {'Refresh' : '1; url = /'}
+        return redirect('/'), 404, {'Refresh': '1; url = /'}
     # TODO
     # Display User's follwers and followed by User
+
 
 @app.route('/explore')
 def explore():
