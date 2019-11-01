@@ -1,5 +1,8 @@
 """
-Prosfora Routes
+
+Title: Prosfora : Social Media for Artists
+Author: Gagan Deep Singh, Mayank Setia, Ritik Bhatnagar
+Languages: Python, HTML, CSS, JavaScript, jQuery
 
 """
 from flask import (Flask, render_template,
