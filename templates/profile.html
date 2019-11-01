@@ -12,8 +12,13 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="my-5">
+                                {% if userInfo.profilePicture == None %}
                                 <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture"
                                     class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}">
+                                {% else %}
+                                <img src="/profile/{{userInfo.username}}/{{userInfo.profilePicture}}" alt="username's Profile Picture"
+                                    class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}">
+                                {% endif %}
                             </div>
                         </div>
                     </div>

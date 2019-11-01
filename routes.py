@@ -134,6 +134,7 @@ def profile(username=None):
         userInfo = User.findUser(username=username)
         if userInfo:
             userInfo = User.toClass(userInfo)
+            # print('profilePicture: ',userInfo.profilePicture)
             return render_template('profile.html', userInfo=userInfo)
         else:
             return redirect('/'), 404, {'Refresh': '1; url = /'}
