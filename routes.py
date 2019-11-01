@@ -144,6 +144,11 @@ def profile(username=None):
 
     else:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
+    
+@app.route("/upload")
+@login_required
+def uploadContent():
+    return render_template('upload.html')
 
 
 @app.route('/profile/<string:username>/followers')
