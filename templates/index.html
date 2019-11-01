@@ -3,6 +3,7 @@
 {{super()}} : Social Media for Artists
 {% endblock %}
 {% block content %}
+{% if not current_user.is_authenticated %}
 <div class="site-space-background"></div>
 <div class="site-main-banner container">
     {{super()}}
@@ -65,4 +66,10 @@
         </div>
     </div>
 </div>
+{% else %}
+    {{super()}}
+    {% for post in posts %}
+        {# post #}
+    {% endfor %}
+{% endif %}
 {% endblock %}

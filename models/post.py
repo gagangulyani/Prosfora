@@ -68,8 +68,29 @@ class Post:
         }
 
     @staticmethod
+    def to_Class(json_):
+        return User(
+            "postID": json_.postID,
+            "userID": json_.userID,
+            "contentType": json_.contentType,
+            "title": json_.title,
+            "content": json_.content,
+            "description": json_.description,
+            "comments": json_.comments,
+            "totalLikes": json_.totalLikes,
+            "totalDownloads":json_.totalDownloads,
+            "totalClicks": json_.totalClicks,
+            "likes": json_.likes,
+            "dislikes": json_.dislikes
+        )
+    @staticmethod
     def savePost(self):
-        Database.insert(Post.COLLECTION, self.toJson())
+        """
+        Saves Post into Database
+        *Uses gridFS for storing binary data seperately for easy access
+        """
+        self.content = Database.saveFile(self.content)
+        return Database.insert(Post.COLLECTION, self.toJson())
 
     @staticmethod
     def updatePost(self):

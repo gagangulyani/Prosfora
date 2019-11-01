@@ -71,6 +71,11 @@ User.load_user = classmethod(load_user)
 
 @app.route('/')
 def index():
+    if current_user.is_authenticated:
+        # TODO
+        # This Code Displays posts by people being followed
+        # by Current User
+        pass
     return render_template('index.html')
 
 
