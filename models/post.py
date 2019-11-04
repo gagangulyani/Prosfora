@@ -118,11 +118,23 @@ class Post:
                 returns list of json objects
         """
         if all:
-            obj = Database.find(collection=Post.COLLECTION,
-                                query={'userID': userID})
-            if obj:
-                if obj.get('AlbumArt') and obj.get('contentType') == 'Music':
-                    pass
+            objs = Database.find(collection=Post.COLLECTION,
+                                 query={'userID': userID})
+            if objs:
+                for obj in objs:
+                    contentType = obj.get('contentType')
+                    AlbumArtID = obj.get('AlbumArt')
+                    if contentType == 'Music':
+                        if AlbumArtID:
+                            AlbumArt = Database.loadFile(AlbumArtID)
+                            obj.update({'AlbumArt': AlbumArt})
+
+                    contentID = obj.get('content')
+                    content = Database.loadFile(contentID)
+                    obj.update({'content': content})
+
+                return objs
+
         obj = Database.find_one(collection=Post.COLLECTION,
                                 query={'userID': userID})
 
