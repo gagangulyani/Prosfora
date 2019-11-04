@@ -103,8 +103,20 @@ class Post:
 
     @staticmethod
     def getPostByPostID(postID):
-        return Database.find_one(collection=Post.COLLECTION,
-                                 query={'postID': postID})
+        obj = Database.find_one(collection=Post.COLLECTION,
+                                query={'postID': postID})
+        if obj:
+            contentType = obj.get('contentType')
+            AlbumArtID = obj.get('AlbumArt')
+            if contentType == 'Music':
+                if AlbumArtID:
+                    AlbumArt = Database.loadFile(AlbumArtID)
+                    obj.update({'AlbumArt': AlbumArt})
+
+            contentID = obj.get('content')
+            content = Database.loadFile(contentID)
+            obj.update({'content': content})
+            return obj
 
     @staticmethod
     def getPostsByUserID(userID, all=False):
@@ -137,6 +149,18 @@ class Post:
 
         obj = Database.find_one(collection=Post.COLLECTION,
                                 query={'userID': userID})
+        if obj:
+            contentType = obj.get('contentType')
+            AlbumArtID = obj.get('AlbumArt')
+            if contentType == 'Music':
+                if AlbumArtID:
+                    AlbumArt = Database.loadFile(AlbumArtID)
+                    obj.update({'AlbumArt': AlbumArt})
+
+            contentID = obj.get('content')
+            content = Database.loadFile(contentID)
+            obj.update({'content': content})
+            return obj
 
     @staticmethod
     def updatePost(self):
