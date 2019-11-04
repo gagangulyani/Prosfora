@@ -11,7 +11,7 @@ class Database(object):
     def initialize(datab):
         client = pymongo.MongoClient(Database.URI)
         Database.DATABASE = client[datab]
-        FS = gridfs.GridFS(Database.DATABASE)
+        Database.FS = gridfs.GridFS(Database.DATABASE)
 
     @staticmethod
     def insert(collection, data):
@@ -57,7 +57,7 @@ class Database(object):
 
         Returns ObjectID of the stored file
         """
-        return FS.put(binaryObj)
+        return Database.FS.put(binaryObj)
 
     @staticmethod
     def loadFile(_id):
@@ -66,9 +66,16 @@ class Database(object):
 
         Returns stored file
         """
-        out = FS.get(_id)
+        out = Database.FS.get(_id)
         return {'file': out,
                 'created_at': out.upload_date}
+
+    @staticmethod
+    def deleteFile(_id):
+        """
+        Takes ObjectID and Deletes it from MongoDB using GridFS 
+        """
+        Database.FS.delete(_id)
 
     @staticmethod
     def created_at(_id):
