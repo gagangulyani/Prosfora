@@ -144,11 +144,26 @@ def profile(username=None):
 
     else:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
-    
+
+
 @app.route("/upload")
+@app.route("/upload/picture")
+@app.route("/upload/video")
+@app.route("/upload/audio")
 @login_required
 def uploadContent():
-    return render_template('upload.html')
+    urls = {
+        "/upload":"upload.html",
+        "/upload/picture":"upload_picture.html",
+        "/upload/video":"upload_video.html",
+        "/upload/audio":"upload_audio.html"
+    }
+    url = urls.get(request.path)
+    print(request.path)
+    if url:
+        return render_template(url)
+    else:
+        return redirect('/'), 404, {'Refresh': '1; url = /'}
 
 
 @app.route('/profile/<string:username>/followers')
