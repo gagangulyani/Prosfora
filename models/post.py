@@ -103,6 +103,9 @@ class Post:
 
     @staticmethod
     def getPostByPostID(postID):
+        """
+            Takes postID as argument and returns a json object
+        """
         obj = Database.find_one(collection=Post.COLLECTION,
                                 query={'postID': postID})
         if obj:
