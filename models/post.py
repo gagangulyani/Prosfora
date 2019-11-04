@@ -11,7 +11,7 @@ class Post:
             contentType -> Choose from Multiple Media Options
             title -> Title of the Post/Track Name/Video Name
             content -> Written Content of the Post
-            AlbumArt -> For Displaying Album art for Music Files
+            AlbumArt -> For Displaying Album art for Audio Files
             description -> Explanation of files chosen for upload
             comments -> Array of commentID's
             totalLikes -> Number of likes on the Post Made
@@ -111,7 +111,7 @@ class Post:
         if obj:
             contentType = obj.get('contentType')
             AlbumArtID = obj.get('AlbumArt')
-            if contentType == 'Music':
+            if contentType == 'Audio':
                 if AlbumArtID:
                     AlbumArt = Database.loadFile(AlbumArtID)
                     obj.update({'AlbumArt': AlbumArt})
@@ -139,7 +139,7 @@ class Post:
                 for obj in objs:
                     contentType = obj.get('contentType')
                     AlbumArtID = obj.get('AlbumArt')
-                    if contentType == 'Music':
+                    if contentType == 'Audio':
                         if AlbumArtID:
                             AlbumArt = Database.loadFile(AlbumArtID)
                             obj.update({'AlbumArt': AlbumArt})
@@ -155,7 +155,7 @@ class Post:
         if obj:
             contentType = obj.get('contentType')
             AlbumArtID = obj.get('AlbumArt')
-            if contentType == 'Music':
+            if contentType == 'Audio':
                 if AlbumArtID:
                     AlbumArt = Database.loadFile(AlbumArtID)
                     obj.update({'AlbumArt': AlbumArt})
