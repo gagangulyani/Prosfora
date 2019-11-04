@@ -89,7 +89,6 @@ class Post:
             dislikes=json_.dislikes
         )
 
-    @staticmethod
     def savePost(self):
         """
         Saves Post into Database

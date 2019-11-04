@@ -153,10 +153,10 @@ def profile(username=None):
 @login_required
 def uploadContent():
     urls = {
-        "/upload":"upload.html",
-        "/upload/picture":"upload_picture.html",
-        "/upload/video":"upload_video.html",
-        "/upload/audio":"upload_audio.html"
+        "/upload": "upload.html",
+        "/upload/picture": "upload_picture.html",
+        "/upload/video": "upload_video.html",
+        "/upload/audio": "upload_audio.html"
     }
     url = urls.get(request.path)
     print(request.path)
@@ -164,6 +164,11 @@ def uploadContent():
         return render_template(url)
     else:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
+
+
+@app.route('/api', methods = ['POST','PUT','DELETE'])
+def api():
+    return jsonify({})
 
 
 @app.route('/profile/<string:username>/followers')
@@ -190,11 +195,6 @@ def logout():
 @app.route('/search')
 def search():
     return render_template('search.html')
-
-
-@app.route('/api')
-def api():
-    return jsonify({})
 
 
 if __name__ == "__main__":
