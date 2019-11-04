@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField,
-                     PasswordField, RadioField, IntegerField)
+                     PasswordField, RadioField, IntegerField,
+                     FileField)
 from models.user import User
 from models.database import Database
 from wtforms.validators import (InputRequired,
@@ -97,3 +98,6 @@ oes Not Match')],
                          validators=[
                              InputRequired()
                          ])
+
+class Upload(FlaskForm):
+    file = FileField()

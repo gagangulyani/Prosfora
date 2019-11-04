@@ -52,25 +52,27 @@ function pause(card) {
     // card_.fadeIn('slow/400/fast', function() {});
 }
 
-var wavesurfer = WaveSurfer.create({
-    container: '#waveform-audio',
-    waveColor: 'white',
-    progressColor: '#AA0000',
-    barWidth: 3,
-    responsive: true,
-    hideScrollbar: true,
-    cursorColor: 'white',
-    height: 80,
-});
+if (Array(document.getElementById('wave-form-audio')).length) {
+    var wavesurfer = WaveSurfer.create({
+        container: '#waveform-audio',
+        waveColor: 'white',
+        progressColor: '#AA0000',
+        barWidth: 3,
+        responsive: true,
+        hideScrollbar: true,
+        cursorColor: 'white',
+        height: 80,
+    });
 
-wavesurfer.load('/static/audios/test/Never Leave Me (feat. Joe Janiak).mp3');
-wavesurfer.on('ready', updateTimer);
-wavesurfer.on('audioprocess', updateTimer);
+    wavesurfer.load('/static/audios/test/Never Leave Me (feat. Joe Janiak).mp3');
+    wavesurfer.on('ready', updateTimer);
+    wavesurfer.on('audioprocess', updateTimer);
 
-// Need to watch for seek in addition to audioprocess as audioprocess doesn't fire
-// if the audio is paused.
-wavesurfer.on('seek', updateTimer);
+    // Need to watch for seek in addition to audioprocess as audioprocess doesn't fire
+    // if the audio is paused.
+    wavesurfer.on('seek', updateTimer);
 
+}
 
 
 function updateTimer() {
@@ -90,7 +92,7 @@ function secondsToTimestamp(seconds) {
     return h + ':' + m + ':' + s;
 }
 
-$('.playPause').click(function(event){
+$('.playPause').click(function (event) {
     $('.playPause').toggleClass('fa-play-circle');
     $('.playPause').toggleClass('fa-pause-circle');
 });

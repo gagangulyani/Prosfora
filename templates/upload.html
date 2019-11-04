@@ -1,6 +1,15 @@
 {% extends "common.html" %}
 {% block content %}
-<div class=content-section>
+<div class="content-section" style="background-image: url('/static/images/backgrounds/peter-oswald-kN_F83xqdiM-unsplash.jpg');
+     min-height: 100vh;background-position: center;background-size: cover;">
     {{super()}}
+    <div class="text-center mt-5 sexy-font" style="text-shadow: 0px 0px 10px white;">
+        <div class="mt-5">
+            <h1 class="display-3 font-weight-bold" style="background-color:none!important">Upload One of the Following</h1>
+            <a class="btn btn-outline-light" href="/upload/picture">Picture</a>
+            <a class="btn btn-outline-light" href="/upload/video">Video</a>
+            <a class="btn btn-outline-light" href="/upload/audio">Audio</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

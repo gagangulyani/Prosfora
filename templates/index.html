@@ -71,5 +71,12 @@
     {% for post in posts %}
         {# post #}
     {% endfor %}
+
+    {% if not posts %}
+    <div class="text-center">
+        <h1 class="mt-5"><i>Start following people to see the posts!</i></h1>
+        <h4>Explore <b><a href="/explore/people" style="color:black">PEOPLE</a></b> on <b><a href = '/featured'>Prosforá</a></b></h4>
+    </div>
+    {% endif %}
 {% endif %}
 {% endblock %}
