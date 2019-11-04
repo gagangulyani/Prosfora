@@ -99,5 +99,11 @@ oes Not Match')],
                              InputRequired()
                          ])
 
-class Upload(FlaskForm):
+class VideoUpload(FlaskForm):
+    file = FileField()
+    
+class AudioUpload(FlaskForm):
+    file = FileField()
+    
+class PictureUpload(FlaskForm):
     file = FileField()

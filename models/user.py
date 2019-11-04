@@ -1,4 +1,6 @@
 from models.database import Database
+from models.post import Post
+from uuid import uuid4
 from werkzeug.security import (generate_password_hash,
                                check_password_hash)
 import re
