@@ -11,7 +11,8 @@ from flask import (Flask, render_template,
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_paranoid import Paranoid
-from forms import Login, Register
+from forms import (Login, Register, PictureUpload,
+                   AudioUpload, VideoUpload)
 from customValidators import checkForJunk
 from models.user import User
 from models.database import Database
@@ -146,10 +147,10 @@ def profile(username=None):
         return redirect('/'), 404, {'Refresh': '1; url = /'}
 
 
-@app.route("/upload")
-@app.route("/upload/picture")
-@app.route("/upload/video")
-@app.route("/upload/audio")
+@app.route("/upload", methods=['GET', 'POST'])
+@app.route("/upload/picture", methods=['GET', 'POST'])
+@app.route("/upload/video", methods=['GET', 'POST'])
+@app.route("/upload/audio", methods=['GET', 'POST'])
 @login_required
 def uploadContent():
     urls = {
@@ -158,17 +159,42 @@ def uploadContent():
         "/upload/video": "upload_video.html",
         "/upload/audio": "upload_audio.html"
     }
+    forms = {
+        "/upload/picture": PictureUpload,
+        "/upload/video": VideoUpload,
+        "/upload/audio": AudioUpload
+    }
+    contentTypes = {
+        "/upload/picture": 'Picture',
+        "/upload/video": 'Video',
+        "/upload/audio": 'Audio'
+    }
+    
+    form = forms.get(request.path)
     url = urls.get(request.path)
-    print(request.path)
-    if url:
-        return render_template(url)
+    contentType = contentTypes.get(request.path)
+    
+    if form:
+        form = form()
+
+    if request.method == 'GET':
+        if url:
+            return render_template(url, form=form)
+        else:
+            return redirect('/'), 404, {'Refresh': '1; url = /'}
     else:
-        return redirect('/'), 404, {'Refresh': '1; url = /'}
+        if form.validate_on_submit():
+            return form.title.data
+        else:
+            print('validation failed!')
+            return render_template(url, form=form)
 
 
-@app.route('/api', methods = ['POST','PUT','DELETE'])
-def api():
-    return jsonify({})
+# @app.route('/api', methods = ['POST','PUT','DELETE'])
+# def api():
+#     if request.method == 'POST':
+
+#     return jsonify({})
 
 
 @app.route('/profile/<string:username>/followers')

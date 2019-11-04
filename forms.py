@@ -1,15 +1,15 @@
 from flask_wtf import FlaskForm
 from wtforms import (StringField, SubmitField,
-                     PasswordField, RadioField, IntegerField,
-                     FileField)
+                     PasswordField, RadioField, IntegerField)
+from flask_wtf.file import FileField, FileRequired, FileAllowed
 from models.user import User
 from models.database import Database
 from wtforms.validators import (InputRequired,
                                 Length, Email, EqualTo)
-
 from customValidators import (checkForJunk,
                               StrongPassword, isUser, isUser2)
 import re
+
 
 class Login(FlaskForm):
 
@@ -37,7 +37,6 @@ class Login(FlaskForm):
         if len(self.password.data) > 16:
             return None
         else:
-            password = self.password.data
             result = User.login(self.email.data, self.password.data)
 
         if result is None:
@@ -50,6 +49,7 @@ class Login(FlaskForm):
 
         else:
             return result
+
 
 class Register(FlaskForm):
     name = StringField(validators=[
@@ -85,6 +85,7 @@ class Register(FlaskForm):
 oes Not Match')],
         render_kw={"placeholder": "Retype Password"})
 
+    # about to be depreciated
     gender = RadioField("Gender",
                         choices=[
                             ('M', 'Male'),
@@ -99,11 +100,63 @@ oes Not Match')],
                              InputRequired()
                          ])
 
+
 class VideoUpload(FlaskForm):
-    file = FileField()
+    file = FileField('Select Video', validators=[
+        FileRequired('No Video selected!'),
+        FileAllowed(['mp4'], 'MP4 Format Supported Only!')
+    ])
+    title = StringField(
+        validators=[
+            InputRequired('Please Enter a title'),
+            Length(min=5)
+        ],
+        render_kw={"placeholder": "Video Title"}
+    )
+
+    description = StringField(
+        render_kw={"placeholder": "Video Description (optional)"})
+
+    submit = SubmitField("Upload", validators = [InputRequired()])
     
+
 class AudioUpload(FlaskForm):
-    file = FileField()
+    file = FileField('Select an Audio', validators=[
+        FileRequired('No Audio selected!'),
+        FileAllowed(['mp3','wav'], 'Only MP3s and WAVs supported!')
+    ])
+    title = StringField(
+        validators=[
+            InputRequired('Please Enter a title'),
+            Length(min=4)
+        ],
+        render_kw={"placeholder": "Audio Title"}
+    )
+
+    description = StringField(
+        render_kw={"placeholder": "Describe your Audio File (optional)"})
+
+    AlbumArt = FileField('Select an Album Art (optional)', validators=[
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Image Files only!')
+    ])
     
+    submit = SubmitField("Upload", validators = [InputRequired()])
+    
+
 class PictureUpload(FlaskForm):
-    file = FileField()
+    file = FileField('Select Picture', validators=[
+        FileRequired('No Picture selected!'),
+        FileAllowed(['jpg', 'png', 'jpeg'], 'Only JPG, PNG and JPEG are supported!')
+    ])
+    title = StringField(
+        validators=[
+            InputRequired('Please Enter a title'),
+            Length(min=5)
+        ],
+        render_kw={"placeholder": "Picture Title"}
+    )
+
+    description = StringField(
+        render_kw={"placeholder": "Describe your Picture (optional)"})
+    
+    submit = SubmitField("Upload", validators = [InputRequired()])
