@@ -2,9 +2,17 @@ from string import punctuation
 from wtforms.validators import ValidationError
 from models.user import User
 from models.database import Database
+from PIL import Image
+from magic import Magic
+from os import remove, stat, listdir
 import re
 
 
+def cleanup():
+    for i in listdir():
+        if 'temp.' in i[:5]:
+            remove(i)
+            
 def checkForJunk(form=None, field=None, usrtext=None):
     punct = punctuation.replace('_', '')
     if not field:
@@ -81,9 +89,59 @@ def isUser(form, field, login=False):
     else:
         if isUser_:
             if email:
-                raise ValidationError('Email Already Taken')
-            raise ValidationError('Username Already Taken')
+                raise ValidationError('Email Already Taken!')
+            raise ValidationError('Username Already Taken!')
 
 
 def isUser2(form, field):
     isUser(form, field, login=True)
+
+
+def imageValidator(form, field):
+    
+    f = field.data
+    try:
+        img = Image.open(f)
+        img.verify()
+
+    except IOError:
+        raise ValidationError('Image is Invalid or Corrupt!')
+
+
+def videoValidator(form, field):
+    
+    f = field.data
+    fname = f"temp.{f.filename.split('.')[-1]}"
+    f.save(fname)
+    file_size = (stat(fname).st_size / 1024) / 1024
+    type_ = Magic(mime=True).from_file(fname)
+    cleanup()
+    if 'video' not in type_:
+        raise ValidationError('Only Vidoe files are supported!')
+
+    isExt = False
+    for i in ['mp4', 'mov', 'webm', 'flv', 'quicktime']:
+        if i in type_:
+            isExt = True
+            break
+
+    if not isExt:
+        raise ValidationError(type_)
+
+    if file_size > 200:
+        raise ValidationError('Video File Too Large! (Video > 200MB)')
+
+
+def audioValidator(form, field):
+    
+    f = field.data
+    fname = f"temp.{f.filename.split('.')[-1]}"
+    f.save(fname)
+    file_size = (stat(fname).st_size / 1024) / 1024
+    type_ = Magic(mime=True).from_file(fname)
+    cleanup()
+    if 'audio' not in type_ and 'x-font-gdos' not in type_:
+        raise ValidationError(type_)
+
+    if file_size > 100:
+        raise ValidationError('Audio File Too Large! (Audio > 100MB)')

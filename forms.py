@@ -7,7 +7,9 @@ from models.database import Database
 from wtforms.validators import (InputRequired,
                                 Length, Email, EqualTo)
 from customValidators import (checkForJunk,
-                              StrongPassword, isUser, isUser2)
+                              StrongPassword, isUser, isUser2,
+                              imageValidator, videoValidator,
+                              audioValidator)
 import re
 
 
@@ -104,7 +106,9 @@ oes Not Match')],
 class VideoUpload(FlaskForm):
     file = FileField('Select Video', validators=[
         FileRequired('No Video selected!'),
-        FileAllowed(['mp4'], 'MP4 Format Supported Only!')
+        FileAllowed(['mp4', 'mov', 'webm', 'flv'],
+                    'Only MP4, MOV, WEBM and FLV files are Supported!'),
+        videoValidator
     ])
     title = StringField(
         validators=[
@@ -117,13 +121,14 @@ class VideoUpload(FlaskForm):
     description = StringField(
         render_kw={"placeholder": "Video Description (optional)"})
 
-    submit = SubmitField("Upload", validators = [InputRequired()])
-    
+    submit = SubmitField("Upload", validators=[InputRequired()])
+
 
 class AudioUpload(FlaskForm):
     file = FileField('Select an Audio', validators=[
         FileRequired('No Audio selected!'),
-        FileAllowed(['mp3','wav'], 'Only MP3s and WAVs supported!')
+        FileAllowed(['mp3', 'wav'], 'Only MP3s and WAVs supported!'),
+        audioValidator
     ])
     title = StringField(
         validators=[
@@ -137,16 +142,18 @@ class AudioUpload(FlaskForm):
         render_kw={"placeholder": "Describe your Audio File (optional)"})
 
     AlbumArt = FileField('Select an Album Art (optional)', validators=[
-        FileAllowed(['jpg', 'png', 'jpeg'], 'Image Files only!')
+        FileAllowed(['mp3'], 'Only MP3s are supported!')
     ])
-    
-    submit = SubmitField("Upload", validators = [InputRequired()])
-    
+
+    submit = SubmitField("Upload", validators=[InputRequired()])
+
 
 class PictureUpload(FlaskForm):
-    file = FileField('Select Picture', validators=[
+    file = FileField('Select a Picture', validators=[
         FileRequired('No Picture selected!'),
-        FileAllowed(['jpg', 'png', 'jpeg'], 'Only JPG, PNG and JPEG are supported!')
+        FileAllowed(['jpg', 'png', 'jpeg'],
+                    'Only JPGs, PNGs and JPEGs are supported!'),
+        imageValidator
     ])
     title = StringField(
         validators=[
@@ -158,5 +165,5 @@ class PictureUpload(FlaskForm):
 
     description = StringField(
         render_kw={"placeholder": "Describe your Picture (optional)"})
-    
-    submit = SubmitField("Upload", validators = [InputRequired()])
+
+    submit = SubmitField("Upload", validators=[InputRequired()])
