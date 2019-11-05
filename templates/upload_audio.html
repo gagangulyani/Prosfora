@@ -2,20 +2,39 @@
 {% block content %}
 <div class="content-section">
     {{super()}}
-    <div class="text-center mt-5 sexy-font">
+    <div class="mt-5 sexy-font">
         <div class="mt-5">
-            <h1 class="display-4 mb-4">Register</h1>
+            <h1 class="text-center display-4 mb-4">Audio <i class="fas fa-file-audio"></i></h1>
             <form method="POST" action="" enctype="multipart/form-data">
                 {{form.hidden_tag()}}
-                {% for field in form %}
-                {% if field.type != 'CSRFTokenField' and field.type!='SubmitField' %}
+                {{ form.file.label }}
                 <div class="form-group">
+                    {{ form.file(class="form-control form-control-lg") }}
+                </div>
+                {% for error in form.file.errors %}
+                <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
+                {% endfor %}
+
+
+                {% for field in form %}
+                {% if field.type != 'CSRFTokenField' and field.type!='SubmitField' and field.type != 'FileField' %}
+
+                <div class="form-group">
+
                     {{ field(class="form-control form-control-lg") }}
+
                 </div>
                 {% for error in field.errors %}
                 <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
                 {% endfor %}
                 {% endif %}
+                {% endfor %}
+                {{ form.AlbumArt.label }}
+                <div class="form-group">
+                    {{ form.AlbumArt(class="form-control form-control-lg") }}
+                </div>
+                {% for error in form.AlbumArt.errors %}
+                <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
                 {% endfor %}
                 {{ form.submit(class='form-control btn btn-dark')}}
             </form>

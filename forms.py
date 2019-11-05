@@ -142,7 +142,10 @@ class AudioUpload(FlaskForm):
         render_kw={"placeholder": "Describe your Audio File (optional)"})
 
     AlbumArt = FileField('Select an Album Art (optional)', validators=[
-        FileAllowed(['mp3'], 'Only MP3s are supported!')
+        FileRequired('No Picture selected!'),
+        FileAllowed(['jpg', 'png', 'jpeg'],
+                    'Only JPGs, PNGs and JPEGs are supported!'),
+        imageValidator
     ])
 
     submit = SubmitField("Upload", validators=[InputRequired()])

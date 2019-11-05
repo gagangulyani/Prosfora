@@ -2,15 +2,19 @@
 {% block content %}
 <div class="content-section">
     {{super()}}
-    <div class="text-center mt-5 sexy-font">
+    <div class="mt-5 sexy-font">
         <div class="mt-5">
-            <h1 class="display-4 mb-4">Register</h1>
+            <h1 class="text-center display-4 mb-4">Picture <i class="far fa-image"></i></h1>
             <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.file.label }}
                 {{form.hidden_tag()}}
                 {% for field in form %}
                 {% if field.type != 'CSRFTokenField' and field.type!='SubmitField' %}
+                
                 <div class="form-group">
+                
                     {{ field(class="form-control form-control-lg") }}
+                    
                 </div>
                 {% for error in field.errors %}
                 <div class="ml-3 mb-2 text-danger"> {{ error }} </div>
