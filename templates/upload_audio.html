@@ -2,7 +2,7 @@
 {% block content %}
 <div class="content-section">
     {{super()}}
-    <div class="mt-5 sexy-font">
+    <div class="mt-5 sexy-font upload-form">
         <div class="mt-5">
             <h1 class="text-center display-4 mb-4">Audio <i class="fas fa-file-audio"></i></h1>
             <form method="POST" action="" enctype="multipart/form-data">
@@ -29,7 +29,7 @@
                 {% endfor %}
                 {% endif %}
                 {% endfor %}
-                {{ form.AlbumArt.label }}
+                {{ form.AlbumArt.label() }}
                 <div class="form-group">
                     {{ form.AlbumArt(class="form-control form-control-lg") }}
                 </div>

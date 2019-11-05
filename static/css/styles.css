@@ -160,6 +160,11 @@ html {
     width: 20rem !important;
 }
 
+.upload-form{
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
 @media screen and (min-width: 991px) {
     .w-80 {
         width: 80%;
@@ -199,6 +204,9 @@ html {
         padding: initial !important:;
         border-radius: initial !important:;
     }
+    .upload-form{
+        width: 75%;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -210,6 +218,15 @@ html {
     .card-img-top {
         height: 35rem !important;
         width: 30rem !important;
+    }
+    .upload-form{
+        width: 80%;
+    }
+    .upload-form input::-webkit-input-placeholder{
+        font-size: 1rem;
+    }
+    .upload-form input[type='file']{
+        font-size: 1rem;
     }
 }
 
@@ -236,6 +253,10 @@ html {
         height: 30rem !important;
         width: 25rem !important;
     }
+
+    .upload-form{
+        width: 80%;
+    }
 }
 
 @media screen and (max-width: 461px) {
@@ -244,6 +265,10 @@ html {
     .card-img-top {
         height: 25rem !important;
         width: 20rem !important;
+    }
+
+    .upload-form{
+        width: 85%;
     }
 }
 
