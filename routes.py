@@ -198,6 +198,7 @@ def uploadContent():
 def followers(username=None):
     if not username:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
+    return render_template('following.html')
     # TODO
     # Display User's follwers and followed by User
 
@@ -218,6 +219,9 @@ def logout():
 def search():
     return render_template('search.html')
 
+@app.route('/<string:current_user>/posts/<string:POSTID>')
+def displayposts(current_user,POSTID):
+    return render_template('post_display.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
