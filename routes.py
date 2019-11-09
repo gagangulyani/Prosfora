@@ -154,24 +154,20 @@ def profile(username=None):
 @login_required
 def uploadContent():
     urls = {
-        "/upload": "upload.html",
-        "/upload/picture": "upload_picture.html",
-        "/upload/video": "upload_video.html",
-        "/upload/audio": "upload_audio.html"
+        "/upload": ["upload.html", None],
+        "/upload/picture": ["upload_picture.html",PictureUpload],
+        "/upload/video": ["upload_video.html",VideoUpload],
+        "/upload/audio": ["upload_audio.html",AudioUpload]
     }
-    forms = {
-        "/upload/picture": PictureUpload,
-        "/upload/video": VideoUpload,
-        "/upload/audio": AudioUpload
-    }
+
     contentTypes = {
         "/upload/picture": 'Picture',
         "/upload/video": 'Video',
         "/upload/audio": 'Audio'
     }
     
-    form = forms.get(request.path)
-    url = urls.get(request.path)
+    form = urls.get(request.path)[-1]
+    url = urls.get(request.path)[0]
     contentType = contentTypes.get(request.path)
     
     if form:
@@ -186,7 +182,7 @@ def uploadContent():
         if form.validate_on_submit():
             return form.title.data
         else:
-            print('validation failed!')
+            # print('validation failed!')
             return render_template(url, form=form)
 
 

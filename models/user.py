@@ -48,8 +48,8 @@ class User:
                  verified=[False, None],
                  ProfileClicks=0,
                  isPublic=True,
-                 totalFollowers = 0,
-                 totalFollowing = 0,
+                 totalFollowers=0,
+                 totalFollowing=0,
                  _id=None,
                  currentSessions=[],
                  active=True):
@@ -160,8 +160,8 @@ class User:
             return result
 
     @staticmethod
-    def updateUserInfo(_id, updatedUserData):
-        Database.update(User.COLLECTION, {'_id': _id}, updatedUserData)
+    def updateUserInfo(userID, updatedUserData):
+        Database.update(User.COLLECTION, {'userID': userID}, updatedUserData)
 
     @staticmethod
     def login(username, password):
@@ -208,26 +208,37 @@ class User:
         pass
 
     @staticmethod
-    def Post(content, type):
+    def Post(title,
+             content,
+             contentType,
+             userID,
+             description=None,
+             AlbumArt=None):
         """
         content:
             data of the post
 
         type attribute for identifying :
-            1. Text,
+            1. Images
             2. Videos,
             3. Audios,
-            4. Images
         """
-        
-        pass
+        post = Post(title=title,
+                    content=content,
+                    contentType=contentType,
+                    description=description,
+                    userID=userID,
+                    postID=postID,
+                    AlbumArt=AlbumArt)
+
+        return post.savePost()
 
     @staticmethod
-    def displayAllPosts(_id):
-        pass
+    def displayAllPosts(userID):
+        return Post.getPostsByUserID(userID, all=True)
 
     @staticmethod
-    def deletePost(postID):
+    def deletePost(userID, postID):
         pass
 
     @staticmethod

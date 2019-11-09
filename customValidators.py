@@ -12,6 +12,7 @@ def cleanup():
     for i in listdir():
         if 'temp.' in i[:5]:
             remove(i)
+            print(i, 'deleted!')
             
 def checkForJunk(form=None, field=None, usrtext=None):
     punct = punctuation.replace('_', '')
