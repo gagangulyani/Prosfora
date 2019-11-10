@@ -27,8 +27,14 @@
                             <p class="userBannerInfo">Female</p>
                             {% else %} {% endif %}
                             <br> {% if current_user.is_authenticated and current_user.userID == userInfo.userID %}
-                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a> {% else %}
-                            <a href="#" class="btn btn-success">FOLLOW</a> {% endif %}
+                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a> 
+                            {% else %}
+                                {% if current_user.userID in userInfo.followers %}
+                                    <form method="POST"><button value="true" name="unfollow" class="btn btn-success">UNFOLLOW</button></form>
+                                {% else %}    
+                                    <form method="POST"><button value="true" name="follow" class="btn btn-success">FOLLOW</button></form> 
+                                {% endif %}
+                            {% endif %}
                         </div>
                     </div>
                 </div>
