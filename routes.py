@@ -12,7 +12,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_paranoid import Paranoid
 from forms import (Login, Register, PictureUpload,
-                   AudioUpload, VideoUpload)
+                   AudioUpload, VideoUpload,AccountUpdation)
 from customValidators import checkForJunk
 from models.user import User
 from models.post import Post
@@ -306,9 +306,10 @@ def logout():
 def search():
     return render_template('search.html')
 
-@app.route('/settings')
+@app.route('/settings', methods=['GET','POST'])
 def settings():
-    return render_template('settings.html')    
+    form = AccountUpdation() 
+    return render_template('settings.html',form=form)    
 
 if __name__ == "__main__":
     app.run(debug=True)
