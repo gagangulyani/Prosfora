@@ -198,6 +198,9 @@ def uploadContent():
         if form.validate_on_submit():
 
             content = form.file.data
+            initial = open('temp_.jpeg','wb')
+            initial.write(content.read())
+            initial.close()
             title = form.title.data
             description = form.description.data
             userID = current_user.userID
@@ -257,13 +260,14 @@ def resources(postID=None,
             flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
         
-    data = data.get('file').read()
+    data = data.get('file')
     
     mimetype = {
         'Audio': 'audio/mpeg', 
         'Video': 'video/mp4',
         'Picture':'image/jpeg'
     }
+    print(type(data))
     
     mimetype = mimetype.get(post.get('contentType'))
     
