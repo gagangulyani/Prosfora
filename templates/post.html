@@ -1,4 +1,7 @@
-{% extends "common.html" %} {% block content %}
+{% extends "common.html" %} {% block content %} {% block scripts %} {{super()}}
+<script>
+    var wavesurfer = [];
+</script>{% endblock %}
 <div class=content-section>
     {{super()}}
     <div class="container">
@@ -25,19 +28,23 @@
             <div class="card-img-overlay card-img-overlay-fixed pb-3">
                 <h5 class="card-title">Card title</h5>
                 <h6 class="card-text"><span class="duration"></span></h6>
-                <div id="waveform-audio" class="mb-2 audio-file"></div>
-                <div class="actions mt-2">
-                    <span class="text-left">
-                        <button class="btn mx-2 btn-outline-light far fa-play-circle playPause"
-                            onclick="wavesurfer.playPause();">
+                <div class="mb-2 audio-file tk{{post.id}}">
+                    <script>
+                        render('{{post.id}}', ".tk{{post.id}}", [-0.39, 0.4, -0.9, 0.91, -0.32, 0.34, -0.95, 0.98, -0.54, 0.74, -0.9, 0.91, -0.33, 0.37, -0.96, 0.98, -0.9, 0.91, -0.79, 0.76, -0.95, 0.95, -0.88, 0.87, -0.91, 0.94, -0.55, 0.6, -0.97, 0.96, -0.43, 0.43, -0.91, 0.91, -0.51, 0.4, -0.98, 0.94, -0.55, 0.76, -0.91, 0.91, -0.33, 0.37, -0.98, 0.98, -0.39, 0.41, -0.92, 0.91, -0.31, 0.34], '/data/{{post.postID}}.mp3');
+                    </script>
+                </div>
+                <div class=" actions mt-2 ">
+                    <span class="text-left ">
+                        <button class="btn mx-2 btn-outline-light far fa-play-circle playPause "
+                            onclick="wavesurfer['{{post.id}}'].playPause();">
                         </button>
                     </span>
-                    <span class="text-right">
-                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up">
+                    <span class="text-right ">
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
                         </button>
-                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-down">
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
                         </button>
-                        <button class="btn mx-2 btn-outline-light fas fa-download">
+                        <button class="btn mx-2 btn-outline-light fas fa-download ">
                         </button>
                     </span>
                 </div>

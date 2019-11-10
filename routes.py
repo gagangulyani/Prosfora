@@ -115,11 +115,14 @@ def posts(username, postID):
         return redirect('/'), 404, {'Refresh': '1; url = /'}
 
     post = Post.getPostByPostID(postID)
-
     if post:
-        userInfo = User.toClass(User.findUser(userID=post.get('userID')))
+        un = uuid4().int % 1000000
+        print('un =>',un)
+        post = Post.to_Class(post)
+        post.id = un
+        userInfo = User.toClass(User.findUser(userID=post.userID))
         return render_template('post.html',
-                               post=Post.to_Class(post),
+                               post=post,
                                userInfo=userInfo)
 
     return {'error': 'Post Not Found!'}
@@ -241,8 +244,10 @@ def resources(postID=None,
         if post:
             if AlbumArt:
                 data = post.get('AlbumArt')
+                print('AlbumArt')
             else:
                 data = post.get('content')
+                print('MP3')
         else:
             flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
@@ -250,21 +255,22 @@ def resources(postID=None,
         user = User.findUser(userID=userID)
         if user:
             if profilePic:
+                print('ProfilePic')
                 data = user.get('profilePic')
             else:
+                print('coverPhoto')
                 data = user.get('coverPhoto')
         else:
             flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
         
     data = data.get('file')
-    
+
     mimetype = {
         'Audio': 'audio/mpeg', 
         'Video': 'video/mp4',
         'Picture':'image/jpeg'
     }
-    
     
     mimetype = mimetype.get(post.get('contentType'))
     print(mimetype)

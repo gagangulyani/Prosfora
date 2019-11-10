@@ -1,6 +1,5 @@
 import pymongo
 import gridfs
-import base64
 
 
 class Database(object):

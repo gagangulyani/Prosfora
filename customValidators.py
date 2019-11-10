@@ -103,39 +103,40 @@ def imageValidator(form, field):
     pass
 
 def videoValidator(form, field):
-    f = field.data
-    fname = f"temp.{f.filename.split('.')[-1]}"
-    f.save(fname)
-    file_size = (stat(fname).st_size / 1024) / 1024
-    type_ = Magic(mime=True).from_file(fname)
-    cleanup()
-    if 'video' not in type_:
-        raise ValidationError('Only Vidoe files are supported!')
+    # f = field.data
+    # fname = f"temp.{f.filename.split('.')[-1]}"
+    # f.save(fname)
+    # file_size = (stat(fname).st_size / 1024) / 1024
+    # type_ = Magic(mime=True).from_file(fname)
+    # cleanup()
+    # if 'video' not in type_:
+    #     raise ValidationError('Only Video files are supported!')
 
-    isExt = False
-    for i in ['mp4', 'mov', 'webm', 'flv', 'quicktime']:
-        if i in type_:
-            isExt = True
-            break
+    # isExt = False
+    # for i in ['mp4', 'mov', 'webm', 'flv', 'quicktime']:
+    #     if i in type_:
+    #         isExt = True
+    #         break
 
-    if not isExt:
-        raise ValidationError(type_)
+    # if not isExt:
+    #     raise ValidationError(type_)
 
-    if file_size > 200:
-        raise ValidationError('Video File Too Large! (Video > 200MB)')
-
+    # if file_size > 200:
+    #     raise ValidationError('Video File Too Large! (Video > 200MB)')
+    pass
 
 def audioValidator(form, field):
 
-    f = field.data
-    fname = f"temp.{f.filename.split('.')[-1]}"
-    f.save(fname)
-    file_size = (stat(fname).st_size / 1024) / 1024
-    type_ = Magic(mime=True).from_file(fname)
-    cleanup()
-    if 'audio' not in type_ and 'x-font-gdos' not in type_:
-        raise ValidationError(type_)
+    # f = field.data
+    # fname = f"temp.{f.filename.split('.')[-1]}"
+    # f.save(fname)
+    # file_size = (stat(fname).st_size / 1024) / 1024
+    # type_ = Magic(mime=True).from_file(fname)
+    # cleanup()
+    # if 'audio' not in type_ and 'x-font-gdos' not in type_:
+    #     raise ValidationError(type_)
 
-    if file_size > 100:
-        raise ValidationError('Audio File Too Large! (Audio > 100MB)')
+    # if file_size > 100:
+    #     raise ValidationError('Audio File Too Large! (Audio > 100MB)')
 
+    pass

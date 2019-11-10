@@ -52,11 +52,19 @@ function pause(card) {
     // card_.fadeIn('slow/400/fast', function() {});
 }
 
-if (Array(document.getElementById('wave-form-audio')).length) {
-    var wavesurfer = WaveSurfer.create({
-        container: '#waveform-audio',
+var wavesurfer = [];
+
+function render(id, selector, peaks, url) {
+    var domEl = document.createElement('div');
+    domEl.setAttribute("id", "t-" + id);
+    document.querySelector(selector).appendChild(domEl);
+
+    trackid = "t" + id;
+    wavesurfer[trackid] = WaveSurfer.create({
+        container: domEl,
         waveColor: 'white',
         progressColor: '#AA0000',
+        backend: 'MediaElement',
         barWidth: 3,
         responsive: true,
         hideScrollbar: true,
@@ -64,15 +72,19 @@ if (Array(document.getElementById('wave-form-audio')).length) {
         height: 80,
     });
 
-    wavesurfer.load('/static/audios/test/Never Leave Me (feat. Joe Janiak).mp3');
-    wavesurfer.on('ready', updateTimer);
-    wavesurfer.on('audioprocess', updateTimer);
+    wavesurfer[trackid].drawBuffer();
+    wavesurfer[trackid].load(url); //false prevents preload of audio file
 
-    // Need to watch for seek in addition to audioprocess as audioprocess doesn't fire
-    // if the audio is paused.
-    wavesurfer.on('seek', updateTimer);
-
+    // wavesurfer[trackid].on('ready', updateTimer);
+    // wavesurfer[trackid].on('audioprocess', updateTimer);
+    // wavesurfer[trackid].on('seek', updateTimer);
+    return wavesurfer[trackid];
 }
+
+// Need to watch for seek in addition to audioprocess as audioprocess doesn't fire
+// if the audio is paused.
+
+
 
 
 function updateTimer() {
@@ -92,7 +104,7 @@ function secondsToTimestamp(seconds) {
     return h + ':' + m + ':' + s;
 }
 
-$('.playPause').click(function (event) {
+$('.playPause').click(function(event) {
     $('.playPause').toggleClass('fa-play-circle');
     $('.playPause').toggleClass('fa-pause-circle');
 });
