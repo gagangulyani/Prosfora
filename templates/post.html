@@ -1,6 +1,44 @@
-{% extends "common.html" %}
-{% block content %}
+{% extends "common.html" %} {% block content %}
 <div class=content-section>
     {{super()}}
+    <div class="container">
+        {% if post.contentType == 'Picture' %}
+        <div class="image-post">
+            <img src="/data/{{post.postID}}.jpeg">
+        </div>
+        {% elif post.contentType == 'Video' %}
+        <div class="video-post">
+            <video class="card-img-top" src="/static/videos/test/tanvi.mp4" allowfullscreen muted></video>
+        </div>
+        {% else %}
+        <div class="audio-post">
+            <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                <div class="img-hover-zoom img-hover-zoom--quick-zoom">
+                    <img class="card-img-top" src="/static/images/test_images/img (6).jpeg" alt="Card image cap">
+                </div>
+            </a>
+            <div class="card-img-overlay card-img-overlay-fixed pb-3">
+                <h5 class="card-title">Card title</h5>
+                <h6 class="card-text"><span class="duration"></span></h6>
+                <div id="waveform-audio" class="mb-2 audio-file"></div>
+                <div class="actions mt-2">
+                    <span class="text-left">
+                        <button class="btn mx-2 btn-outline-light far fa-play-circle playPause"
+                            onclick="wavesurfer.playPause();">
+                        </button>
+                    </span>
+                    <span class="text-right">
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up">
+                        </button>
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-down">
+                        </button>
+                        <button class="btn mx-2 btn-outline-light fas fa-download">
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

@@ -212,6 +212,7 @@ class User:
              content,
              contentType,
              userID,
+             postID,
              description=None,
              AlbumArt=None):
         """
