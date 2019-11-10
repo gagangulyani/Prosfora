@@ -160,8 +160,22 @@ class User:
             return result
 
     @staticmethod
-    def updateUserInfo(userID, updatedUserData):
-        Database.update(User.COLLECTION, {'userID': userID}, updatedUserData)
+    def updateUserInfo(updatedUser):
+        Database.update(User.COLLECTION, {
+                        'userID': updatedUser.get('userID')}, updatedUser)
+
+    @staticmethod
+    def follow(cuser, user, unfollow=False):
+        
+        if unfollow:
+            user.get('followers').remove(cuser.get('userID'))
+            cuser.get('following').remove(user.get('userID'))
+        else:
+            if cuser.get('userID') not in user.get('followers'):
+                user.get('followers').append(cuser.get('userID'))                
+                cuser.get('following').append(user.get('userID'))
+        User.updateUserInfo(cuser)
+        User.updateUserInfo(user)
 
     @staticmethod
     def login(username, password):

@@ -152,7 +152,7 @@ def login():
 
 
 @app.route('/profile')
-@app.route('/profile/<string:username>')
+@app.route('/profile/<string:username>', methods=['GET','POST'])
 def profile(username=None):
     userInfo = {}
     if username and not checkForJunk(
@@ -161,6 +161,21 @@ def profile(username=None):
         if userInfo:
             userInfo = User.toClass(userInfo)
             # print('profilePicture: ',userInfo.profilePicture)
+            if request.method == "POST":
+                if current_user.is_authenticated:
+
+                    cuser = User.findUser(userID = current_user.userID)
+                    user = User.findUser(username = username)
+                    if request.form.get('follow'):
+                        User.follow(cuser, user)
+                        print('about to start following..')
+                    elif request.form.get('unfollow'):
+                        User.follow(cuser,user,unfollow=True)
+                        print('about to start unfollowing..')
+                    return redirect(f'/profile/{username}')
+                else:
+                    print('user is not authenticated')
+
             return render_template('profile.html', userInfo=userInfo)
         else:
             return redirect('/'), 404, {'Refresh': '1; url = /'}
@@ -292,6 +307,10 @@ def followers(username=None):
 @app.route('/explore')
 def explore():
     return render_template('explore.html')
+
+@app.route('/featured')
+def featured():
+    return render_template('featured.html')
 
 @app.route('/about')
 def about():
