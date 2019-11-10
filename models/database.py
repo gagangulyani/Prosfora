@@ -1,5 +1,6 @@
 import pymongo
 import gridfs
+import base64
 
 
 class Database(object):
@@ -67,7 +68,7 @@ class Database(object):
         Returns stored file
         """
         out = Database.FS.get(_id)
-        return {'file': out,
+        return {'file': out.read(),
                 'created_at': out.upload_date}
 
     @staticmethod

@@ -43,8 +43,7 @@ html {
     border: none;
     padding: 0 !important;
     /*optional*/
-    font-family: arial,
-        sans-serif;
+    font-family: arial, sans-serif;
     /*input has OS specific font-family*/
     color: black;
     cursor: pointer;
@@ -125,12 +124,10 @@ html {
     animation: shrink 10s infinite alternate;
 }
 
-
 @keyframes shrink {
     0% {
         transform: scale(1.2)
     }
-
     100% {
         transform: scale(1.0)
     }
@@ -160,11 +157,12 @@ html {
     width: 20rem !important;
 }
 
-.upload-form{
+.upload-form {
     margin-left: auto;
     margin-right: auto;
     width: 75%;
 }
+
 @media screen and (min-width: 991px) {
     .w-80 {
         width: 80%;
@@ -175,36 +173,30 @@ html {
     #heading {
         font-size: 4em;
     }
-
     .site-main-banner,
     .site-space-background {
         min-height: 55vh !important;
     }
-
     .img-logo {
         width: 50% !important;
     }
-
     .card,
     .card-img-top {
         height: 40rem !important;
         width: 35rem !important;
     }
-
     .display-4 {
         background-color: white;
         line-height: 1.4em;
     }
-
     body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a {
         color: #22AADD !important;
-
-        text-shadow: none !important:;
-        background-color: none !important:;
-        padding: initial !important:;
-        border-radius: initial !important:;
+        text-shadow: none !important: ;
+        background-color: none !important: ;
+        padding: initial !important: ;
+        border-radius: initial !important: ;
     }
-    .upload-form{
+    .upload-form {
         width: 75%;
     }
 }
@@ -213,19 +205,18 @@ html {
     #heading {
         font-size: 3.5em;
     }
-
     .card,
     .card-img-top {
         height: 35rem !important;
         width: 30rem !important;
     }
-    .upload-form{
+    .upload-form {
         width: 80%;
     }
-    .upload-form input::-webkit-input-placeholder{
+    .upload-form input::-webkit-input-placeholder {
         font-size: 1rem;
     }
-    .upload-form input[type='file']{
+    .upload-form input[type='file'] {
         font-size: 1rem;
     }
 }
@@ -234,40 +225,33 @@ html {
     #heading {
         font-size: 2em;
     }
-
     .searchbar:hover>.search_input {
         width: 80%;
     }
-
     .site-main-banner,
     .site-space-background {
         min-height: 40vh !important;
     }
-
     .bg-cont {
         background: white !important;
     }
-
     .card,
     .card-img-top {
         height: 30rem !important;
         width: 25rem !important;
     }
-
-    .upload-form{
+    .upload-form {
         width: 80%;
     }
 }
 
 @media screen and (max-width: 461px) {
-
     .card,
     .card-img-top {
         height: 25rem !important;
         width: 20rem !important;
     }
-
-    .upload-form{
+    .upload-form {
         width: 85%;
     }
 }
@@ -323,8 +307,7 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a {
 }
 
 body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hover {
-    text-shadow: 1px 1px 8px white,
-        1px 1px 8px #22AADD;
+    text-shadow: 1px 1px 8px white, 1px 1px 8px #22AADD;
     background-color: rgba(255, 255, 255, 0.7);
     padding: 0.3em;
     border-radius: 2em;
@@ -341,7 +324,6 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     border: 3px dashed yellow;
     padding: 0.3em;
     border-radius: 100%;
-
 }
 
 #gender li {
@@ -371,7 +353,6 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     color: white;
     font-size: 2em;
     text-shadow: 0px 5px 8px black;
-
     display: inline-block;
     padding: 0.2em;
 }
@@ -417,10 +398,12 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     font-family: 'Lexend Deca', cursive;
 }
 
+
 /* 
     Image hover Zoom n’ Rotate effect with Pure CSS
     https://w3bits.com/css-image-hover-zoom/
 */
+
 .card-img-top {
     height: 100%;
     width: 100%;
@@ -432,12 +415,16 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     /* Removing this will break the effects */
 }
 
+
 /* Quick-zoom Container */
+
 .img-hover-zoom--quick-zoom img {
     transition: transform .5s ease;
 }
 
+
 /* The Transformation */
+
 .card:hover .img-hover-zoom--quick-zoom img {
     transform: scale(1.2);
 }
@@ -456,11 +443,11 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     display: none!important;
 }
 
-.card:hover .card-img-overlay-down{
+.card:hover .card-img-overlay-down {
     display: flex!important;
 }
 
-.card:hover .card-img-overlay:not(.card-img-overlay-down){
+.card:hover .card-img-overlay:not(.card-img-overlay-down) {
     display: none;
 }
 
@@ -469,51 +456,60 @@ body>div.landing-2.bg-cont>div>div>div.col-12.col-lg-6.mt-sm-5>div>div>h1 a:hove
     text-shadow: 0px 1px 3px black;
 }
 
-.waveform{
+.waveform {
     display: flex!important;
 }
-.far, .fas{
+
+.far,
+.fas {
     font-size: 1.2em;
 }
-.card-img-overlay-fixed{
+
+.card-img-overlay-fixed {
     display: block!important;
 }
-.card-img-overlay-fixed:hover{
+
+.card-img-overlay-fixed:hover {
     padding-bottom: 2em;
 }
-.actions{
+
+.actions {
     display: none;
 }
-.audio-post:hover .actions{
+
+.audio-post:hover .actions {
     display: inline;
 }
 
 .content-section {
-  background: #ffffff;
-  padding: 10px 20px;
-  border: 1px solid #dddddd;
-  border-radius: 3px;
-  margin-bottom: 20px;
+    background: #ffffff;
+    padding: 10px 20px;
+    border: 1px solid #dddddd;
+    border-radius: 3px;
+    margin-bottom: 20px;
 }
+
 .account-img {
-  /*height: 125px;*/
-  width: 125px;
-  margin-right: 20px;
-  margin-bottom: 16px;
+    /*height: 125px;*/
+    width: 125px;
+    margin-right: 20px;
+    margin-bottom: 16px;
 }
+
 .account-heading {
-  font-size: 2.5rem;
+    font-size: 2.5rem;
 }
 
-h1, h2, h3, h4, h5, h6 {
+
+/* h1, h2, h3, h4, h5, h6 {
   color: #444444;
-}
+} */
 
-#settings-proPic{
+#settings-proPic {
     height: 12em;
-    width: 12em; 
+    width: 12em;
 }
 
-.media-body{
+.media-body {
     margin-top: 2.8em;
 }

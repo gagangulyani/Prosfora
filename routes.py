@@ -149,7 +149,7 @@ def login():
 
 
 @app.route('/profile')
-@app.route('/profile/<string:username>')
+@app.route('/profile/<string:username>', methods=['GET','POST'])
 def profile(username=None):
     userInfo = {}
     if username and not checkForJunk(
@@ -158,6 +158,21 @@ def profile(username=None):
         if userInfo:
             userInfo = User.toClass(userInfo)
             # print('profilePicture: ',userInfo.profilePicture)
+            if request.method == "POST":
+                if current_user.is_authenticated:
+
+                    cuser = User.findUser(userID = current_user.userID)
+                    user = User.findUser(username = username)
+                    if request.form.get('follow'):
+                        User.follow(cuser, user)
+                        print('about to start following..')
+                    elif request.form.get('unfollow'):
+                        User.follow(cuser,user,unfollow=True)
+                        print('about to start unfollowing..')
+                    return redirect(f'/profile/{username}')
+                else:
+                    print('user is not authenticated')
+
             return render_template('profile.html', userInfo=userInfo)
         else:
             return redirect('/'), 404, {'Refresh': '1; url = /'}
@@ -197,14 +212,14 @@ def uploadContent():
     else:
         if form.validate_on_submit():
 
-            content = form.file.data
+            content = form.file.data.read()
             title = form.title.data
             description = form.description.data
             userID = current_user.userID
             postID = uuid4().hex
 
             if contentType == 'Audio':
-                AlbumArt = form.AlbumArt.data
+                AlbumArt = form.AlbumArt.data.read()
             else:
                 AlbumArt = None
 
@@ -257,7 +272,7 @@ def resources(postID=None,
             flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
         
-    data = data.get('file').read()
+    data = data.get('file')
     
     mimetype = {
         'Audio': 'audio/mpeg', 
@@ -265,13 +280,14 @@ def resources(postID=None,
         'Picture':'image/jpeg'
     }
     
-    mimetype = mimetype.get(post.get('contentType'))
     
+    mimetype = mimetype.get(post.get('contentType'))
+    print(mimetype)
     return send_file(
         BytesIO(data),
         mimetype=mimetype,
         as_attachment=True,
-        attachment_filename=f"{uuid4().hex}.jpeg")
+        attachment_filename=f"{uuid4().hex}.{ext}")
 
 
 @app.route('/profile/<string:username>/followers')

@@ -3,8 +3,9 @@ from wtforms.validators import ValidationError
 from models.user import User
 from models.database import Database
 from PIL import Image
-"""from magic import Magic"""
+from magic import Magic
 from os import remove, stat, listdir
+from copy import deepcopy
 import re
 
 
@@ -99,18 +100,9 @@ def isUser2(form, field):
 
 
 def imageValidator(form, field):
-    
-    f = field.data
-    try:
-        img = Image.open(f)
-        img.verify()
-
-    except IOError:
-        raise ValidationError('Image is Invalid or Corrupt!')
-
+    pass
 
 def videoValidator(form, field):
-    """
     f = field.data
     fname = f"temp.{f.filename.split('.')[-1]}"
     f.save(fname)
@@ -130,12 +122,11 @@ def videoValidator(form, field):
         raise ValidationError(type_)
 
     if file_size > 200:
-        raise ValidationError('Video File Too Large! (Video > 200MB)')"""
-    pass    
+        raise ValidationError('Video File Too Large! (Video > 200MB)')
 
 
 def audioValidator(form, field):
-    """
+
     f = field.data
     fname = f"temp.{f.filename.split('.')[-1]}"
     f.save(fname)
@@ -147,5 +138,4 @@ def audioValidator(form, field):
 
     if file_size > 100:
         raise ValidationError('Audio File Too Large! (Audio > 100MB)')
-    """
-    pass
+
