@@ -1,53 +1,88 @@
 {% extends "common.html" %} {% block content %} {% block scripts %} {{super()}}
 <script>
     var wavesurfer = [];
-</script>{% endblock %}
+</script> {% endblock %}
 <div class=content-section>
     {{super()}}
-    <div class="container">
+    <div class="container text-center">
         {% if post.contentType == 'Picture' %}
         <div class="image-post">
+            <h1>{{post.title}}</h1>
             <div class="d-block">
-                <img src="/data/{{post.postID}}.jpeg">
+                <img class="w-75" src="/data/{{post.postID}}.jpeg">
             </div>
+            {% if post.description %}
+            <p>
+                {{post.description}}
+            </p>
+            {% endif %}
+            <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+            </button>
+            <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+            </button>
+            <a href="/data/{{post.postID}}.jpeg" class="btn mx-2 btn-outline-light fas fa-download ">
+            </a>
         </div>
         {% elif post.contentType == 'Video' %}
-        <div class="card m-2 mx-auto" onmouseenter="play(this)" onmouseleave="pause(this);">
+        <div class="m-2 mx-auto w-75" onmouseover="play(this)">
+            <h1>{{post.title}}</h1>
             <div class="video-post">
-                <video class="card-img-top" src="/data/{{post.postID}}.mp4" allowfullscreen></video>
+                <video class="w-75" allowfullscreen autoplay="autoplay" loop="loop" controls="controls">
+                    <source class="w-75" src="/data/{{post.postID}}.mp4" type="video/mp4">
+                </video>
             </div>
+            {% if post.description %}
+            <p>
+                {{post.description}}
+            </p>
+            {% endif %}
+
+            <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+            </button>
+            <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+            </button>
+            <a href="/data/{{post.postID}}.mp4" class="btn mx-2 btn-outline-light fas fa-download ">
+            </a>
         </div>
 
         {% else %}
-        <div class="audio-post">
-            <a class='postLink'>
-                <div class="img-hover-zoom img-hover-zoom--quick-zoom">
-                    <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg" alt="Card image cap">
-                </div>
-            </a>
-            <div class="card-img-overlay card-img-overlay-fixed pb-3">
-                <h5 class="card-title">Card title</h5>
-                <h6 class="card-text"><span class="duration"></span></h6>
-                <div class="mb-2 audio-file tk{{post.id}}">
+        <div class="audio-post sexy-font">
+            <h1>{{post.title}}</h1>
+
+            {% if post.AlbumArt %}
+            <div class="AlbumArt">
+                <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg " alt="Card image cap ">
+            </div>
+            {% else %}
+            <div class="AlbumArt">
+                <img class="card-img-top" src="/static/images/content/cassette.jpg" alt="Card image cap">
+            </div>
+
+            {% endif %}
+
+            <div class="">
+                <h6 class=""><span class="duration "></span></h6>
+                <div class="mb-2 audio-file tk{{post.id}} ">
                     <script>
-                        render('{{post.id}}', ".tk{{post.id}}", [-0.39, 0.4, -0.9, 0.91, -0.32, 0.34, -0.95, 0.98, -0.54, 0.74, -0.9, 0.91, -0.33, 0.37, -0.96, 0.98, -0.9, 0.91, -0.79, 0.76, -0.95, 0.95, -0.88, 0.87, -0.91, 0.94, -0.55, 0.6, -0.97, 0.96, -0.43, 0.43, -0.91, 0.91, -0.51, 0.4, -0.98, 0.94, -0.55, 0.76, -0.91, 0.91, -0.33, 0.37, -0.98, 0.98, -0.39, 0.41, -0.92, 0.91, -0.31, 0.34], '/data/{{post.postID}}.mp3');
+                        wavesurfer["{{post.id}}"] = render('{{post.id}}', ".tk{{post.id}} ", '/data/{{post.postID}}.mp3').playPause();;
                     </script>
                 </div>
                 <div class=" actions mt-2 ">
-                    <span class="text-left ">
-                        <button class="btn mx-2 btn-outline-light far fa-play-circle playPause "
-                            onclick="wavesurfer['{{post.id}}'].playPause();">
-                        </button>
-                    </span>
                     <span class="text-right ">
+                        <button class="btn mx-2 btn-outline-light fas fa-play-circle playPause"
+                            onclick="wavesurfer['{{post.id}}'].playPause();"></button>
+
                         <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
                         </button>
                         <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
                         </button>
-                        <button class="btn mx-2 btn-outline-light fas fa-download ">
-                        </button>
+                        <a href="/data/{{post.postID}}.mp3" class="btn mx-2 btn-outline-light fas fa-download ">
+                        </a>
                     </span>
                 </div>
+                <p>
+                    {{post.description}}
+                </p>
             </div>
         </div>
         {% endif %}

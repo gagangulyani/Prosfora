@@ -160,12 +160,13 @@ def profile(username=None):
         userInfo = User.findUser(username=username)
         if userInfo:
             userInfo = User.toClass(userInfo)
+            user = User.findUser(username = username)
             # print('profilePicture: ',userInfo.profilePicture)
             if request.method == "POST":
                 if current_user.is_authenticated:
 
                     cuser = User.findUser(userID = current_user.userID)
-                    user = User.findUser(username = username)
+                    
                     if request.form.get('follow'):
                         User.follow(cuser, user)
                         print('about to start following..')
@@ -175,8 +176,10 @@ def profile(username=None):
                     return redirect(f'/profile/{username}')
                 else:
                     print('user is not authenticated')
-
-            return render_template('profile.html', userInfo=userInfo)
+            
+            posts = Post.getPostsByUserID(userID = user.get('userID'), all=True)
+            
+            return render_template('profile.html', userInfo=userInfo, posts = posts)
         else:
             return redirect('/'), 404, {'Refresh': '1; url = /'}
 
@@ -222,7 +225,9 @@ def uploadContent():
             postID = uuid4().hex
 
             if contentType == 'Audio':
-                AlbumArt = form.AlbumArt.data.read()
+                AlbumArt = form.AlbumArt.data
+                if AlbumArt:
+                    AlbumArt = AlbumArt.read()
             else:
                 AlbumArt = None
 

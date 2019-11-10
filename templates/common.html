@@ -1,19 +1,15 @@
-{% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
+{% extends "bootstrap/base.html" %} {% import "bootstrap/wtf.html" as wtf %}
 <!DOCTYPE html>
 <html>
 
 <head>
     <!-- Required meta tags -->
-    {% block styles %}
-    {{super()}}
+    {% block styles %} {{super()}}
     <meta charset="utf-8">
     <link rel='shortcut icon' type='image/x-icon' href='{{url_for("static", filename="images/favicon.ico")}}' />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css?family=Lexend+Deca|Comfortaa&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-    {% endblock %}
-    {% block title%}Prosforá{% endblock %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}"> {% endblock %} {% block title%}Prosforá{% endblock %}
 </head>
 
 <body>
@@ -31,7 +27,7 @@
                         <form class="form-inline justify-content-around" action='/search'>
                             <input class="form-control- w-75" type="search" placeholder="Search" aria-label="Search" name="q">
                             <button class='search-btn-' href="">
-                              <i class="fas fa-search"></i>
+                                <i class="fas fa-search"></i>
                             </button>
                         </form>
                     </li>
@@ -41,68 +37,125 @@
                     <li class="nav-item mx-auto">
                         <a class="nav-link" href="/explore">Explore</a>
                     </li>
-                  </ul>
-                  <ul class="navbar-nav mr-lg-2 mx-auto d-none d-lg-inline">
-                      <li class="nav-item mx-auto">
-                          <a class="nav-link submit-a-photo text-center" href="/upload">Post your Content</a>
-                      </li>
-                  </ul>
-                  
-                  <ul class="navbar-nav">
-                    {% if current_user.is_authenticated %}
-                      
+                </ul>
+                <ul class="navbar-nav mr-lg-2 mx-auto d-none d-lg-inline">
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link submit-a-photo text-center" href="/upload">Post your Content</a>
+                    </li>
+                </ul>
 
-                      <li class="nav-item mx-auto dropdown">
+                <ul class="navbar-nav">
+                    {% if current_user.is_authenticated %}
+
+
+                    <li class="nav-item mx-auto dropdown">
                         <a class="nav-link dropdown-toggle d-flex justify-content-center" href="#" id="navbarDropdownMenuLink2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          
-                          <img src="/static/images/profile/profilePic.jpg" class = "d-inline rounded-circle mr-2" width="40" height="40" alt=""><p class='mb-0'style="font-size: 1.4em">{{current_user.name.split()[0]}}</p>
-                        
-                          
+                            
+                            {% if current_user.profilePic %}
+                            <img src="/data/{{current_user.userID}}/profilePic.jpg" class="d-inline rounded-circle mr-2" width="40" height="40" alt="">
+                            {% else %}
+                            <img src="/static/images/profile/profilePic.jpg" class="d-inline rounded-circle mr-2" width="40" height="40" alt="">
+                            {% endif %}
+                            <p class='mb-0' style="font-size: 1.4em">{{current_user.name.split()[0]}}</p>
+
+
                         </a>
-                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink2">
-                              <a class="dropdown-item" href="/profile/{{current_user.username}}">Profile</a>
-                              <a class="dropdown-item" href="/settings">Settings</a>
-                              <a class="dropdown-item" href="/logout">Logout</a>
-                          </div>
-                          
-                      </li>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink2">
+                            <a class="dropdown-item" href="/profile/{{current_user.username}}">Profile</a>
+                            <a class="dropdown-item" href="/settings">Settings</a>
+                            <a class="dropdown-item" href="/logout">Logout</a>
+                        </div>
+
+                    </li>
 
                     {% else %}
-                      <li class="nav-item mx-auto">
-                          <a class="nav-link login" href="/login">Login</a>
-                      </li>
-      
-                      <li class="nav-item mx-auto register">
-                          <a class="nav-link" href="/register">Register</a>
-                      </li>
-                  {% endif %}
-                      <li class="nav-item mx-auto dropdown d-none d-lg-inline">
-                          <a class="nav-link dropdown-toggle fas fa-ellipsis-v mt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              
-                          </a>
-                          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                              <a class="dropdown-item" href="/contact">Contact</a>
-                              <a class="dropdown-item" href="/about">About Prosfora</a>
-                          </div>
-                      </li>
+                    <li class="nav-item mx-auto">
+                        <a class="nav-link login" href="/login">Login</a>
+                    </li>
+
+                    <li class="nav-item mx-auto register">
+                        <a class="nav-link" href="/register">Register</a>
+                    </li>
+                    {% endif %}
+                    <li class="nav-item mx-auto dropdown d-none d-lg-inline">
+                        <a class="nav-link dropdown-toggle fas fa-ellipsis-v mt-1" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/contact">Contact</a>
+                            <a class="dropdown-item" href="/about">About Prosfora</a>
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-    {% endblock %}
-    {% block content %}
-    {% for message in get_flashed_messages() %} 
-    <div class= "alert alert-dark">
-        <button type= "button" class= "close" data-dismiss= "alert" > &times; </button> {{ message }} 
-    </div> 
-    {% endfor %}
-    {% endblock %}
-    {% block scripts %}
-    {{super()}}
+    {% endblock %} {% block content %} {% for message in get_flashed_messages() %}
+    <div class="alert alert-dark">
+        <button type="button" class="close" data-dismiss="alert"> &times; </button> {{ message }}
+    </div>
+    {% endfor %} {% endblock %} {% block scripts %} {{super()}}
+    <script>
+        var wavesurfer = [];
+
+        function render(id, selector, url) {
+            var domEl = document.createElement('div');
+            domEl.setAttribute("id", "t-" + id);
+            document.querySelector(selector).appendChild(domEl);
+
+            trackid = "t" + id;
+            wavesurfer[trackid] = WaveSurfer.create({
+                container: domEl,
+                waveColor: 'black',
+                progressColor: '#AA0000',
+                backend: 'MediaElement',
+                barWidth: 3,
+                responsive: true,
+                hideScrollbar: true,
+                cursorColor: 'white',
+                height: 80,
+            });
+
+            wavesurfer[trackid].drawBuffer();
+            wavesurfer[trackid].load(url); //false prevents preload of audio file
+
+            // wavesurfer[trackid].on('ready', updateTimer);
+            // wavesurfer[trackid].on('audioprocess', updateTimer);
+            // wavesurfer[trackid].on('seek', updateTimer);
+            return wavesurfer[trackid];
+        }
+
+        // Need to watch for seek in addition to audioprocess as audioprocess doesn't fire
+        // if the audio is paused.
+
+
+
+
+        function updateTimer() {
+            var formattedTime = secondsToTimestamp(wavesurfer.getCurrentTime());
+            $('.duration').text(formattedTime + ' - ' + secondsToTimestamp(wavesurfer.getDuration()));
+        }
+
+        function secondsToTimestamp(seconds) {
+            seconds = Math.floor(seconds);
+            var h = Math.floor(seconds / 3600);
+            var m = Math.floor((seconds - (h * 3600)) / 60);
+            var s = seconds - (h * 3600) - (m * 60);
+
+            h = h < 10 ? '0' + h : h;
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+            return h + ':' + m + ':' + s;
+        }
+
+        $('.playPause').click(function(event) {
+            $('.playPause').toggleClass('fa-play-circle');
+            $('.playPause').toggleClass('fa-pause-circle');
+        });
+    </script>
     <script src="https://unpkg.com/wavesurfer.js"></script>
     <script src="{{url_for('static', filename = 'scripts/script.js')}}"></script>
-    {{ moment.include_moment() }}
-    {% endblock %}
+    {{ moment.include_moment() }} {% endblock %}
 </body>
 
 </html>

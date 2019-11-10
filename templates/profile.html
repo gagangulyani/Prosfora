@@ -27,14 +27,11 @@
                             <p class="userBannerInfo">Female</p>
                             {% else %} {% endif %}
                             <br> {% if current_user.is_authenticated and current_user.userID == userInfo.userID %}
-                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a> 
+                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a> {% else %} {% if current_user.userID in userInfo.followers %}
+                            <form method="POST"><button value="true" name="unfollow" class="btn btn-success">UNFOLLOW</button></form>
                             {% else %}
-                                {% if current_user.userID in userInfo.followers %}
-                                    <form method="POST"><button value="true" name="unfollow" class="btn btn-success">UNFOLLOW</button></form>
-                                {% else %}    
-                                    <form method="POST"><button value="true" name="follow" class="btn btn-success">FOLLOW</button></form> 
-                                {% endif %}
-                            {% endif %}
+                            <form method="POST"><button value="true" name="follow" class="btn btn-success">FOLLOW</button></form>
+                            {% endif %} {% endif %}
                         </div>
                     </div>
                 </div>
@@ -62,16 +59,18 @@
     <div class="container p-3">
         <h1 class='h3'>{{userInfo.name.split()[0]}}'s Posts</h1>
         <div class="row">
-            {# Actual Content #} {# Images #}
+            {# Actual Content #} {% for post in posts %} {% if post.contentType == 'Picture' %} {# Images #}
             <div class="col col-lg-4 col-sm-12">
                 <div class="card m-2 mx-auto image-post">
-                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                    <a href="/{{userInfo.username}}/posts/{{post.postID}}" class='postLink'>
                         <div class="img-hover-zoom img-hover-zoom--quick-zoom">
-                            <img class="card-img-top" src="/static/images/test_images/img (7).jpeg" alt="Card image cap">
+                            <img class="card-img-top" src="/data/{{post.postID}}.jpeg" alt="Card image cap">
                         </div>
                         <div class="card-img-overlay card-img-overlay-up pb-3">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">{{post.title}}</h5>
+                            {% if post.description %}
+                            <p class="card-text">{{post.description}}</p>
+                            {% endif %}
                         </div>
                     </a>
                     <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
@@ -79,14 +78,16 @@
                     </div>
                 </div>
             </div>
-            {# Videos #}
+            {# Videos #} {% elif post.contentType == 'Video' %}
             <div class="col col-lg-4 col-sm-12">
                 <div class="card m-2 mx-auto video-post" onmouseenter="play(this)" onmouseleave="pause(this);">
-                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
-                        <video class="card-img-top" src="/static/videos/test/tanvi.mp4" allowfullscreen muted></video>
+                    <a href="/{{userInfo.username}}/posts/{{post.postID}}" class='postLink'>
+                        <video class="card-img-top" src="/data/{{post.postID}}.mp4" allowfullscreen muted></video>
                         <div class="card-img-overlay card-img-overlay-up pb-3">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                            <h5 class="card-title">{{post.title}}</h5>
+                            {% if post.description %}
+                            <p class="card-text">{{post.description}}</p>
+                            {% endif %}
                         </div>
                     </a>
                     <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
@@ -94,36 +95,44 @@
                     </div>
                 </div>
             </div>
-            {# Audios #}
+            {# Audios #} {% else %}
             <div class="col col-lg-4 col-sm-12">
                 <div class="card m-2 mx-auto audio-post">
-                    <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
+                    <a href="/{{userInfo.username}}/posts/{{post.postID}}" class='postLink'>
+                        {% if post.AlbumArt %}
                         <div class="img-hover-zoom img-hover-zoom--quick-zoom">
-                            <img class="card-img-top" src="/static/images/test_images/img (6).jpeg" alt="Card image cap">
+                            <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg" alt="Card image cap">
                         </div>
+                        {% else %}
+                        <div class="img-hover-zoom img-hover-zoom--quick-zoom">
+                            <img class="card-img-top" src="/static/images/content/cassette.jpg" alt="Card image cap">
+                        </div>
+                        {% endif %}
+
                     </a>
                     <div class="card-img-overlay card-img-overlay-fixed pb-3">
-                        <h5 class="card-title">Card title</h5>
+                        <h5 class="card-title">{{post.title}}</h5>
                         <h6 class="card-text"><span class="duration"></span></h6>
                         <div id="waveform-audio" class="mb-2 audio-file"></div>
                         <div class="actions mt-2">
                             <span class="text-left">
-                                <button class="btn mx-2 btn-outline-light far fa-play-circle playPause"
-                                    onclick="wavesurfer.playPause();">
-                                </button>
+                                <a href="/{{userInfo.username}}/posts/{{post.postID}}"
+                                    class="btn mx-2 btn-outline-light far fa-play-circle playPause">
+                                </a>
                             </span>
                             <span class="text-right">
                                 <button class="btn mx-2 btn-outline-light fas fa-thumbs-up">
                                 </button>
                                 <button class="btn mx-2 btn-outline-light fas fa-thumbs-down">
                                 </button>
-                                <button class="btn mx-2 btn-outline-light fas fa-download">
-                                </button>
+                                <a href="/data/{{post.postID}}" class="btn mx-2 btn-outline-light fas fa-download">
+                                </a>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
+            {% endif %} {% endfor %}
         </div>
     </div>
 </div>

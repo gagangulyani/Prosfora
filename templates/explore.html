@@ -1,72 +1,96 @@
-{% extends "common.html" %}
-{% block content %}
-{{super()}}
+{% extends "common.html" %} {% block content %} {{super()}}
 <style>
-.container {
-  position: relative;
-  width: 50%;
-}
-
-.image {
-  opacity: 1;
-  display: block;
-  width: 100%;
-  height: auto;
-  transition: .5s ease;
-  backface-visibility: hidden;
-}
-
-.middle {
-  transition: .5s ease;
-  opacity: 0;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-}
-
-.container:hover .image {
-  opacity: 0.3;
-}
-
-.container:hover .middle {
-  opacity: 1;
-}
-
-.text {
-  background-color: #4CAF50;
-  color: white;
-  font-size: 16px;
-  padding: 16px 32px;
-}
+    body {
+        background-color: black;
+    }
+    
+    .container- {
+        position: relative;
+        margin: 2em;
+    }
+    
+    .image--- {
+        opacity: 1;
+        display: block;
+        width: 100%;
+        height: auto;
+        transition: .5s ease;
+        backface-visibility: hidden;
+    }
+    
+    .image---:hover {
+        box-shadow: 1px 1px 20px white;
+    }
+    
+    .middle--- {
+        transition: .5s ease;
+        opacity: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    
+    .container-:hover .image--- {
+        opacity: 0.3;
+    }
+    
+    .container-:hover .middle--- {
+        opacity: 1;
+        box-shadow: 1px 1px 10px white;
+    }
+    
+    .text--- {
+        background-color: black;
+        color: white;
+        font-size: 16px;
+        padding: 16px 32px;
+    }
 </style>
-<div class="container"><a href="/explore/people">
-  <img src="/static/images/explore/people.jpg" alt="Avatar" class="image" style="width:100%">
-  <div class="middle">
-    <div class="text">People</div>
-  </div></a>
-</div>
-<br><br>
-<div class="container"><a href="/explore/music">
-  <img src="/static/images/explore/music.jpg" alt="Avatar" class="image" style="width:100%">
-  <div class="middle">
-    <div class="text">Music</div>
-  </div></a>
-</div>
-<br><br>
-<div class="container"><a href="/explore/picture">
-  <img src="/static/images/explore/picture.jpg" alt="Avatar" class="image" style="width:100%">
-  <div class="middle">
-    <div class="text">Pictures</div>
-  </div></a>
-</div>
-<br><br>
-<div class="container"><a href="/explore/video">
-  <img src="/static/images/explore/video.jpg" alt="Avatar" class="image" style="width:100%">
-  <div class="middle">
-    <div class="text">Videos</div>
-  </div></a>
-</div>
-{% endblock %}
+<div class="container sexy-font">
+    <div class="row">
+        <div class="col-6">
+
+            <div class="container-">
+                <a href=" /explore/people ">
+                    <img src="/static/images/explore/people.jpg " alt=" Avatar " class=" image--- " style=" width:100% ">
+                    <div class=" middle--- ">
+                        <div class=" text--- ">People</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class=" container- ">
+                <a href="/explore/music">
+                    <img src="/static/images/explore/music.jpg " alt=" Avatar " class=" image--- " style=" width:100% ">
+                    <div class=" middle--- ">
+                        <div class=" text--- ">Music</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class=" container- ">
+                <a href="/explore/picture ">
+                    <img src="/static/images/explore/picture.jpg " alt=" Avatar " class=" image--- " style=" width:100% ">
+                    <div class=" middle--- ">
+                        <div class=" text--- ">Pictures</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class=" container- ">
+                <a href="/explore/video ">
+                    <img src="/static/images/explore/video.jpg " alt=" Avatar " class=" image--- " style=" width:100% ">
+                    <div class=" middle--- ">
+                        <div class=" text--- ">Videos</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
