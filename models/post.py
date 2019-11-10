@@ -73,20 +73,20 @@ class Post:
 
     @staticmethod
     def to_Class(json_):
-        return User(
-            postID=json_.postID,
-            userID=json_.userID,
-            contentType=json_.contentType,
-            title=json_.title,
-            content=json_.content,
-            AlbumArt=json_.AlbumArt,
-            description=json_.description,
-            comments=json_.comments,
-            totalLikes=json_.totalLikes,
-            totalDownloads=json_.totalDownloads,
-            totalClicks=json_.totalClicks,
-            likes=json_.likes,
-            dislikes=json_.dislikes
+        return Post(
+            postID=json_.get("postID"),
+            userID=json_.get("userID"),
+            contentType=json_.get("contentType"),
+            title=json_.get("title"),
+            content=json_.get("content"),
+            AlbumArt=json_.get("AlbumArt"),
+            description=json_.get("description"),
+            comments=json_.get("comments"),
+            totalLikes=json_.get("totalLikes"),
+            totalDownloads=json_.get("totalDownloads"),
+            totalClicks=json_.get("totalClicks"),
+            likes=json_.get("likes"),
+            dislikes=json_.get("dislikes")
         )
 
     def savePost(self):

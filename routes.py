@@ -7,7 +7,7 @@ Languages: Python, HTML, CSS, JavaScript, jQuery
 """
 from flask import (Flask, render_template,
                    jsonify, request,
-                   redirect)
+                   redirect, flash, send_file)
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_paranoid import Paranoid
@@ -15,12 +15,14 @@ from forms import (Login, Register, PictureUpload,
                    AudioUpload, VideoUpload)
 from customValidators import checkForJunk
 from models.user import User
+from models.post import Post
 from models.database import Database
 from MongoLogin import *
 from uuid import uuid4
 from flask_login import (login_user, current_user,
                          logout_user, LoginManager,
                          login_required)
+from io import BytesIO
 
 app = Flask(__name__)
 
@@ -103,6 +105,26 @@ def register():
     return render_template('register.html', form=form)
 
 
+@app.route('/<string:username>/posts/<string:postID>')
+def posts(username, postID):
+    user = User.findUser(username=username)
+    if not user:
+        user = User.findUser(userID=username)
+
+    if not user:
+        return redirect('/'), 404, {'Refresh': '1; url = /'}
+
+    post = Post.getPostByPostID(postID)
+
+    if post:
+        userInfo = User.toClass(User.findUser(userID=post.get('userID')))
+        return render_template('post.html',
+                               post=Post.to_Class(post),
+                               userInfo=userInfo)
+
+    return {'error': 'Post Not Found!'}
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -154,26 +176,16 @@ def profile(username=None):
 @login_required
 def uploadContent():
     urls = {
-        "/upload": "upload.html",
-        "/upload/picture": "upload_picture.html",
-        "/upload/video": "upload_video.html",
-        "/upload/audio": "upload_audio.html"
+        "/upload": ["upload.html", None],
+        "/upload/picture": ["upload_picture.html", PictureUpload, 'Picture'],
+        "/upload/video": ["upload_video.html", VideoUpload, 'Video'],
+        "/upload/audio": ["upload_audio.html", AudioUpload, 'Audio']
     }
-    forms = {
-        "/upload/picture": PictureUpload,
-        "/upload/video": VideoUpload,
-        "/upload/audio": AudioUpload
-    }
-    contentTypes = {
-        "/upload/picture": 'Picture',
-        "/upload/video": 'Video',
-        "/upload/audio": 'Audio'
-    }
-    
-    form = forms.get(request.path)
-    url = urls.get(request.path)
-    contentType = contentTypes.get(request.path)
-    
+
+    url = urls.get(request.path)[0]
+    form = urls.get(request.path)[1]
+    contentType = urls.get(request.path)[-1]
+
     if form:
         form = form()
 
@@ -184,17 +196,82 @@ def uploadContent():
             return redirect('/'), 404, {'Refresh': '1; url = /'}
     else:
         if form.validate_on_submit():
-            return form.title.data
+
+            content = form.file.data
+            title = form.title.data
+            description = form.description.data
+            userID = current_user.userID
+            postID = uuid4().hex
+
+            if contentType == 'Audio':
+                AlbumArt = form.AlbumArt.data
+            else:
+                AlbumArt = None
+
+            result = User.Post(title=title,
+                               content=content,
+                               contentType=contentType,
+                               userID=userID,
+                               postID=postID,
+                               description=description,
+                               AlbumArt=AlbumArt)
+            if result:
+                return redirect(f'/{current_user.username}/posts/{postID}')
+            else:
+                return 'Something went wrong..'
         else:
-            print('validation failed!')
+            # print('validation failed!')
             return render_template(url, form=form)
 
 
-# @app.route('/api', methods = ['POST','PUT','DELETE'])
-# def api():
-#     if request.method == 'POST':
+@app.route('/data/<string:postID>.<string:ext>')
+@app.route('/data/<string:AlbumArt>/<string:postID>.jpeg')
+@app.route('/profile/<string:userID>/<string:profilePic>.jpeg')
+@app.route('/profile/<string:userID>/<string:coverPhoto>.jpeg')
+def resources(postID=None,
+              userID=None,
+              contentID=None,
+              AlbumArt=None,
+              profilePic=None,
+              coverPhoto=None, 
+              ext = None):
 
-#     return jsonify({})
+    if postID != None:
+        post = Post.getPostByPostID(postID)
+        if post:
+            if AlbumArt:
+                data = post.get('AlbumArt')
+            else:
+                data = post.get('content')
+        else:
+            flash('Unable to load Resources')
+            return redirect('/'), 404, {'Refresh': '1; url = /'}
+    else:
+        user = User.findUser(userID=userID)
+        if user:
+            if profilePic:
+                data = user.get('profilePic')
+            else:
+                data = user.get('coverPhoto')
+        else:
+            flash('Unable to load Resources')
+            return redirect('/'), 404, {'Refresh': '1; url = /'}
+        
+    data = data.get('file').read()
+    
+    mimetype = {
+        'Audio': 'audio/mpeg', 
+        'Video': 'video/mp4',
+        'Picture':'image/jpeg'
+    }
+    
+    mimetype = mimetype.get(post.get('contentType'))
+    
+    return send_file(
+        BytesIO(data),
+        mimetype=mimetype,
+        as_attachment=True,
+        attachment_filename=f"{uuid4().hex}.jpeg")
 
 
 @app.route('/profile/<string:username>/followers')
@@ -202,8 +279,7 @@ def uploadContent():
 def followers(username=None):
     if not username:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
-    # TODO
-    # Display User's follwers and followed by User
+    return render_template('followers.html')
 
 
 @app.route('/explore')

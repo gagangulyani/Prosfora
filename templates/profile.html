@@ -1,8 +1,4 @@
-{% extends "common.html" %}
-{% block title%}
-{{" ".join(userInfo.name.split()[:2])}} - {{super()}}
-{% endblock %}
-{% block content %}
+{% extends "common.html" %} {% block title%} {{" ".join(userInfo.name.split()[:2])}} - {{super()}} {% endblock %} {% block content %}
 <div class='profile_page'>
     {{super()}}
     <div class="coverPhoto">
@@ -13,12 +9,8 @@
                         <div class="col-12">
                             <div class="my-5">
                                 {% if userInfo.profilePicture == None %}
-                                <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture"
-                                    class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}">
-                                {% else %}
-                                <img src="/profile/{{userInfo.username}}/{{userInfo.profilePicture}}" alt="username's Profile Picture"
-                                    class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}">
-                                {% endif %}
+                                <img src="/static/images/profile/profilePic.jpg" alt="username's Profile Picture" class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}"> {% else %}
+                                <img src="/profile/{{userInfo.username}}/{{userInfo.profilePicture}}" alt="username's Profile Picture" class="proPic mx-auto d-block img-fluid" title="{{userInfo.name}}"> {% endif %}
                             </div>
                         </div>
                     </div>
@@ -29,14 +21,14 @@
                             <p class="userBannerInfo">{{userInfo.name}}</p>
                             <br>
                             <p class="userBannerInfo">{{userInfo.username}}</p>
-                            <br>
-                            <p class="userBannerInfo">{{userInfo.country}}</p>
-                            <br>
-                            {% if current_user.is_authenticated and current_user.userID == userInfo.userID %}
-                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a>
-                            {% else %}
-                            <a href="#" class="btn btn-success">FOLLOW</a>
-                            {% endif %}
+                            <br> {% if userInfo.gender == 'M' %}
+                            <p class="userBannerInfo">Male</p>
+                            {% elif userInfo.gender == 'F' %}
+                            <p class="userBannerInfo">Female</p>
+                            {% else %} {% endif %}
+                            <br> {% if current_user.is_authenticated and current_user.userID == userInfo.userID %}
+                            <a href="/settings" class="btn sexy-font btn-outline-light">SETTINGS</a> {% else %}
+                            <a href="#" class="btn btn-success">FOLLOW</a> {% endif %}
                         </div>
                     </div>
                 </div>
@@ -64,24 +56,20 @@
     <div class="container p-3">
         <h1 class='h3'>{{userInfo.name.split()[0]}}'s Posts</h1>
         <div class="row">
-            {# Actual Content #}
-            {# Images #}
+            {# Actual Content #} {# Images #}
             <div class="col col-lg-4 col-sm-12">
                 <div class="card m-2 mx-auto image-post">
                     <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
                         <div class="img-hover-zoom img-hover-zoom--quick-zoom">
-                            <img class="card-img-top" src="/static/images/test_images/img (7).jpeg"
-                                alt="Card image cap">
+                            <img class="card-img-top" src="/static/images/test_images/img (7).jpeg" alt="Card image cap">
                         </div>
                         <div class="card-img-overlay card-img-overlay-up pb-3">
                             <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         </div>
                     </a>
                     <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
-                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up"></button><button
-                            class="btn btn-outline-light fas fa-thumbs-down"></button>
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up"></button><button class="btn btn-outline-light fas fa-thumbs-down"></button>
                     </div>
                 </div>
             </div>
@@ -92,13 +80,11 @@
                         <video class="card-img-top" src="/static/videos/test/tanvi.mp4" allowfullscreen muted></video>
                         <div class="card-img-overlay card-img-overlay-up pb-3">
                             <h5 class="card-title">Card title</h5>
-                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
-                                of the card's content.</p>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                         </div>
                     </a>
                     <div class="actions justify-content-end d-flex card-img-overlay card-img-overlay-down">
-                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up"></button><button
-                            class="btn btn-outline-light fas fa-thumbs-down"></button>
+                        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up"></button><button class="btn btn-outline-light fas fa-thumbs-down"></button>
                     </div>
                 </div>
             </div>
@@ -107,8 +93,7 @@
                 <div class="card m-2 mx-auto audio-post">
                     <a href="/{{userInfo.username}}/posts/POSTID" class='postLink'>
                         <div class="img-hover-zoom img-hover-zoom--quick-zoom">
-                            <img class="card-img-top" src="/static/images/test_images/img (6).jpeg"
-                                alt="Card image cap">
+                            <img class="card-img-top" src="/static/images/test_images/img (6).jpeg" alt="Card image cap">
                         </div>
                     </a>
                     <div class="card-img-overlay card-img-overlay-fixed pb-3">
