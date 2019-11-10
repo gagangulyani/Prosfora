@@ -197,17 +197,14 @@ def uploadContent():
     else:
         if form.validate_on_submit():
 
-            content = form.file.data
-            initial = open('temp_.jpeg','wb')
-            initial.write(content.read())
-            initial.close()
+            content = form.file.data.read()
             title = form.title.data
             description = form.description.data
             userID = current_user.userID
             postID = uuid4().hex
 
             if contentType == 'Audio':
-                AlbumArt = form.AlbumArt.data
+                AlbumArt = form.AlbumArt.data.read()
             else:
                 AlbumArt = None
 
@@ -267,15 +264,15 @@ def resources(postID=None,
         'Video': 'video/mp4',
         'Picture':'image/jpeg'
     }
-    print(type(data))
+    
     
     mimetype = mimetype.get(post.get('contentType'))
-    
+    print(mimetype)
     return send_file(
         BytesIO(data),
         mimetype=mimetype,
         as_attachment=True,
-        attachment_filename=f"{uuid4().hex}.jpeg")
+        attachment_filename=f"{uuid4().hex}.{ext}")
 
 
 @app.route('/profile/<string:username>/followers')

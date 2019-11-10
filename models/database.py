@@ -58,12 +58,7 @@ class Database(object):
 
         Returns ObjectID of the stored file
         """
-        f=open('temp.jpeg', 'wb+')
-        f.write(binaryObj.read())
-        f.seek(0)
-        bin_ = f.read()
-        f.close()
-        return Database.FS.put(bin_)
+        return Database.FS.put(binaryObj)
 
     @staticmethod
     def loadFile(_id):
@@ -72,10 +67,9 @@ class Database(object):
 
         Returns stored file
         """
-        f = Database.FS.get(_id)
-        open('temp.jpeg','wb').write(f.read())
-        return {'file': f.read(),
-                'created_at': f.upload_date}
+        out = Database.FS.get(_id)
+        return {'file': out.read(),
+                'created_at': out.upload_date}
 
     @staticmethod
     def deleteFile(_id):

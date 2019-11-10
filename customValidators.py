@@ -100,16 +100,7 @@ def isUser2(form, field):
 
 
 def imageValidator(form, field):
-    
-    f = field.data
-    temp = deepcopy(f)
-    try:
-        img = Image.open(temp)
-        img.verify()
-
-    except IOError:
-        raise ValidationError('Image is Invalid or Corrupt!')
-
+    pass
 
 def videoValidator(form, field):
     f = field.data
