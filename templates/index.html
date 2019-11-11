@@ -1,9 +1,4 @@
-{% extends 'common.html'%}
-{% block title %}
-{{super()}} : Social Media for Artists
-{% endblock %}
-{% block content %}
-{% if not current_user.is_authenticated %}
+{% extends 'common.html'%} {% block title %} {{super()}} : Social Media for Artists {% endblock %} {% block content %} {% if not current_user.is_authenticated %}
 <div class="site-space-background"></div>
 <div class="site-main-banner container">
     {{super()}}
@@ -33,7 +28,9 @@
             <div class="col-12 col-lg-6 mt-sm-5" style="color: black;">
                 <div class="row">
                     <div class="col-12 pt-5 mt-sm-2">
-                        <h1 class="text-center text-middle display-lg-2 display-4"><span class="joinNow"><b><a href="/register">Join</a> Now</b><br> to<br></span> <b><a href="/connect">Connect</a></b> and <b><a href="post">Share</a></b><br><i style="font-size: 0.5em;">with the <b>people</b> around the <b>world</b>.</i></h1>
+                        <h1 class="text-center text-middle display-lg-2 display-4"><span class="joinNow"><b><a
+                                        href="/register">Join</a> Now</b><br> to<br></span> <b><a
+                                    href="/connect">Connect</a></b> and <b><a href="post">Share</a></b><br><i style="font-size: 0.5em;">with the <b>people</b> around the <b>world</b>.</i></h1>
                     </div>
                 </div>
             </div>
@@ -66,17 +63,90 @@
         </div>
     </div>
 </div>
-{% else %}
-    {{super()}}
-    {% for post in posts %}
-        {# post #}
-    {% endfor %}
-
-    {% if not posts %}
-    <div class="text-center">
-        <h1 class="mt-5"><i>Start following people to see the posts!</i></h1>
-        <h4>Explore <b><a href="/explore/people" style="color:black">PEOPLE</a></b> on <b><a href = '/featured'>Prosforá</a></b></h4>
+{% else %} {{super()}} {% for post in posts %} {# post #} {% endfor %} {% if not posts %}
+<div class="text-center">
+    <h1 class="mt-5"><i>Start following people to see the posts!</i></h1>
+    <h4>Explore <b><a href="/explore/people" style="color:black">PEOPLE</a></b> on <b><a
+                href='/featured'>Prosforá</a></b></h4>
+</div>
+{% else %} {% for post in posts %} {% if post.contentType == 'Picture' %}
+<div class="image-post w-75 mx-auto">
+    <h1>{{post.title}}</h1>
+    <div class="d-block">
+        <img class="w-75" src="/data/{{post.postID}}.jpeg">
     </div>
+    {% if post.description %}
+    <p>
+        {{post.description}}
+    </p>
     {% endif %}
-{% endif %}
-{% endblock %}
+    <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+    </button>
+    <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+    </button>
+    <a href="/data/{{post.postID}}.jpeg" class="btn mx-2 btn-outline-light fas fa-download ">
+    </a>
+</div>
+{% elif post.contentType == 'Video' %}
+<div class="m-2 mx-auto w-75" onmouseover="play(this)">
+    <h1>{{post.title}}</h1>
+    <div class="video-post">
+        <video class="w-75" allowfullscreen autoplay="autoplay" loop="loop" controls="controls">
+            <source class="w-75" src="/data/{{post.postID}}.mp4" type="video/mp4">
+        </video>
+    </div>
+    {% if post.description %}
+    <p>
+        {{post.description}}
+    </p>
+    {% endif %}
+
+    <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+    </button>
+    <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+    </button>
+    <a href="/data/{{post.postID}}.mp4" class="btn mx-2 btn-outline-light fas fa-download ">
+    </a>
+</div>
+
+{% else %}
+<div class="audio-post sexy-font w-75 mx-auto">
+    <h1>{{post.title}}</h1>
+
+    {% if post.AlbumArt %}
+    <div class="AlbumArt">
+        <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg " alt="Card image cap ">
+    </div>
+    {% else %}
+    <div class="AlbumArt">
+        <img class="card-img-top" src="/static/images/content/cassette.jpg" alt="Card image cap">
+    </div>
+
+    {% endif %}
+
+    <div class="container">
+        <h6 class=""><span class="duration "></span></h6>
+        <div class="mb-2 audio-file tk{{post.id}} ">
+            <script>
+                wavesurfer["{{post.id}}"] = render('{{post.id}}', ".tk{{post.id}} ", '/data/{{post.postID}}.mp3').playPause();;
+            </script>
+        </div>
+        <div class=" actions mt-2 ">
+            <span class="text-right ">
+                <button class="btn mx-2 btn-outline-light fas fa-play-circle playPause"
+                    onclick="wavesurfer['{{post.id}}'].playPause();"></button>
+
+                <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+                </button>
+                <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+                </button>
+                <a href="/data/{{post.postID}}.mp3" class="btn mx-2 btn-outline-light fas fa-download ">
+                </a>
+            </span>
+        </div>
+        <p>
+            {{post.description}}
+        </p>
+    </div>
+</div>
+{% endif %} {% endfor %} {% endif %} {% endif %} {% endblock %}

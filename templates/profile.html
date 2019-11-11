@@ -1,4 +1,4 @@
-{% extends "common.html" %} {% block title%} {{" ".join(userInfo.name.split()[:2])}} - {{super()}} {% endblock %} {% block content %}
+{% extends "common.html" %} {% block title%} {{userInfo.name}} - {{super()}} {% endblock %} {% block content %}
 <div class='profile_page'>
     {{super()}}
     <div class="coverPhoto">
@@ -59,7 +59,7 @@
     <div class="container p-3">
         <h1 class='h3'>{{userInfo.name.split()[0]}}'s Posts</h1>
         <div class="row">
-            {# Actual Content #} {% for post in posts %} {% if post.contentType == 'Picture' %} {# Images #}
+            {# Actual Content #} {% if posts %} {% for post in posts %} {% if post.contentType == 'Picture' %} {# Images #}
             <div class="col col-lg-4 col-sm-12">
                 <div class="card m-2 mx-auto image-post">
                     <a href="/{{userInfo.username}}/posts/{{post.postID}}" class='postLink'>
@@ -132,7 +132,9 @@
                     </div>
                 </div>
             </div>
-            {% endif %} {% endfor %}
+            {% endif %} {% endfor %} {% else %}
+            <h5 class="text-center mx-auto">Nothing to show here..</h5>
+            {% endif %}
         </div>
     </div>
 </div>

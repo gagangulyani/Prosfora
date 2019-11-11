@@ -12,7 +12,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_paranoid import Paranoid
 from forms import (Login, Register, PictureUpload,
-                   AudioUpload, VideoUpload,AccountUpdation)
+                   AudioUpload, VideoUpload, AccountUpdation)
 from customValidators import checkForJunk
 from models.user import User
 from models.post import Post
@@ -74,12 +74,11 @@ User.load_user = classmethod(load_user)
 
 @app.route('/')
 def index():
+    posts = []
     if current_user.is_authenticated:
-        # TODO
-        # This Code Displays posts by people being followed
-        # by Current User
-        pass
-    return render_template('index.html')
+        posts = User.newsfeed(current_user.userID)
+        
+    return render_template('index.html', posts = posts)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -117,7 +116,7 @@ def posts(username, postID):
     post = Post.getPostByPostID(postID)
     if post:
         un = uuid4().int % 1000000
-        print('un =>',un)
+        print('un =>', un)
         post = Post.to_Class(post)
         post.id = un
         userInfo = User.toClass(User.findUser(userID=post.userID))
@@ -152,7 +151,7 @@ def login():
 
 
 @app.route('/profile')
-@app.route('/profile/<string:username>', methods=['GET','POST'])
+@app.route('/profile/<string:username>', methods=['GET', 'POST'])
 def profile(username=None):
     userInfo = {}
     if username and not checkForJunk(
@@ -160,26 +159,26 @@ def profile(username=None):
         userInfo = User.findUser(username=username)
         if userInfo:
             userInfo = User.toClass(userInfo)
-            user = User.findUser(username = username)
+            user = User.findUser(username=username)
             # print('profilePicture: ',userInfo.profilePicture)
             if request.method == "POST":
                 if current_user.is_authenticated:
 
-                    cuser = User.findUser(userID = current_user.userID)
-                    
+                    cuser = User.findUser(userID=current_user.userID)
+
                     if request.form.get('follow'):
                         User.follow(cuser, user)
                         print('about to start following..')
                     elif request.form.get('unfollow'):
-                        User.follow(cuser,user,unfollow=True)
+                        User.follow(cuser, user, unfollow=True)
                         print('about to start unfollowing..')
                     return redirect(f'/profile/{username}')
                 else:
                     print('user is not authenticated')
-            
-            posts = Post.getPostsByUserID(userID = user.get('userID'), all=True)
-            
-            return render_template('profile.html', userInfo=userInfo, posts = posts)
+
+            posts = Post.getPostsByUserID(userID=user.get('userID'), all=True)
+
+            return render_template('profile.html', userInfo=userInfo, posts=posts)
         else:
             return redirect('/'), 404, {'Refresh': '1; url = /'}
 
@@ -256,8 +255,8 @@ def resources(postID=None,
               contentID=None,
               AlbumArt=None,
               profilePic=None,
-              coverPhoto=None, 
-              ext = None):
+              coverPhoto=None,
+              ext=None):
 
     if postID != None:
         post = Post.getPostByPostID(postID)
@@ -283,15 +282,15 @@ def resources(postID=None,
         else:
             flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
-        
+
     data = data.get('file')
 
     mimetype = {
-        'Audio': 'audio/mpeg', 
+        'Audio': 'audio/mpeg',
         'Video': 'video/mp4',
-        'Picture':'image/jpeg'
+        'Picture': 'image/jpeg'
     }
-    
+
     mimetype = mimetype.get(post.get('contentType'))
     print(mimetype)
     return send_file(
@@ -306,24 +305,34 @@ def resources(postID=None,
 def followers(username=None):
     if not username:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
-    return render_template('followers.html')
+    
+    if "followers" in request.path:
+        followers = User.getFollowers(userID = current_user.userID)
+    else:
+        followers = User.getFollowers(userID = current_user.userID, following=True)
+        
+    return render_template('followers.html', users = followers)
 
 
 @app.route('/explore')
 def explore():
     return render_template('explore.html')
 
+
 @app.route('/featured')
 def featured():
     return render_template('featured.html')
+
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+
 @app.route('/contact')
 def contact():
     return render_template('contact.html')
+
 
 @app.route('/logout')
 @login_required
@@ -336,10 +345,28 @@ def logout():
 def search():
     return render_template('search.html')
 
-@app.route('/settings', methods=['GET','POST'])
+
+@app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    form = AccountUpdation() 
-    return render_template('settings.html',form=form)    
+    form = AccountUpdation()
+    if request.method == "POST":
+        if form.validate_on_submit():
+            data = {}
+            if form.username.data:
+                data['username'] = form.username.data
+            if form.coverphoto.data:
+                data['coverPhoto'] = form.coverphoto.data
+            if form.email.data:
+                data['email'] = form.email.data
+            if form.picture.data:
+                data['profilePic'] = form.picture.data.read()
+            if data:
+                cu = User.findUser(userID=current_user.userID)
+                cu.update(data)
+                User.updateUserInfo(cu)
+    return render_template('settings.html', form=form)
+
 
 if __name__ == "__main__":
     app.run(debug=True)
+ 

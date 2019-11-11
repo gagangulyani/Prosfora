@@ -166,14 +166,20 @@ class User:
 
     @staticmethod
     def follow(cuser, user, unfollow=False):
-        
+
         if unfollow:
             user.get('followers').remove(cuser.get('userID'))
             cuser.get('following').remove(user.get('userID'))
+            user['totalFollowers'] = user.get('totalFollowers')-1
+            cuser['totalFollowing'] = cuser.get('totalFollowing')-1
         else:
             if cuser.get('userID') not in user.get('followers'):
-                user.get('followers').append(cuser.get('userID'))                
+                user.get('followers').append(cuser.get('userID'))
                 cuser.get('following').append(user.get('userID'))
+                
+                user['totalFollowers'] = user.get('totalFollowers')+1
+                cuser['totalFollowing'] = cuser.get('totalFollowing')+1
+                
         User.updateUserInfo(cuser)
         User.updateUserInfo(user)
 
@@ -192,9 +198,32 @@ class User:
 
     @staticmethod
     def isUser(email=None, username=None):
-        if User.findUser(email, username):
+        if User.findUser(email=email, username=username):
             return True
         return False
+
+    @staticmethod
+    def newsfeed(userID):
+        user = User.findUser(userID=userID)
+        posts = Database.find(collection=Post.COLLECTION,
+                              query={"userID": {"$in": user.get('following')}})
+        posts = [Post.to_Class(i) for i in posts]
+        return posts
+
+    @staticmethod
+    def getFollowers(userID, following=False):
+        user = User.findUser(userID=userID)
+        if following:
+            followers = Database.find(collection=User.COLLECTION,
+                                      query={"userID": {"$in": user.get('following')}})
+
+        else:
+            followers = Database.find(collection=User.COLLECTION, query={
+                                      "userID": {"$in": user.get('followers')}})
+
+            followers = [User.toClass(i) for i in followers]
+
+        return followers
 
     @staticmethod
     def checkPassword(password, email=None, username=None,):

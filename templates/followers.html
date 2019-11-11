@@ -1,15 +1,15 @@
-{% extends "common.html" %}
-{% block content %}
+{% extends "common.html" %} {% block content %}
 <div class="section-content">
-	{{ super() }}
-	<br>
-	<center><h4>Followers</h4></center>
-	<br>
-	<h5>1.&nbsp;<img src="/static/images/profile/coverPhoto.jpg" height="50" width="50">&nbsp;Ritik Bhatnagar&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
-	<h5>2.&nbsp;<img src="/static/images/profile/profilePic.jpg" height="50" width="50">&nbsp;Mayank Setia&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
-	<h5>3.&nbsp;<img src="/static/images/profile/1.jpg" height="50" width="50">&nbsp;Gagan Deep Singh&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
-	<h5>4.&nbsp;<img src="/static/images/profile/2.jpg" height="50" width="50">&nbsp;Kamna Dagar&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
-	<h5>5.&nbsp;<img src="/static/images/profile/3.jpg" height="50" width="50">&nbsp;Vansh Dhariwal&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
-	<h5>6.&nbsp;<img src="/static/images/profile/4.jpg" height="50" width="50">&nbsp;Suparna Khara&nbsp;<a class="btn btn-outline-dark" href="#">Follow</a></h5><br>
+    {{ super() }}
+    <br>
+    <center>
+        <h4>Followers</h4>
+    </center>
+    <br> {% if users %} {% for user in users %}
+    <h5>1.&nbsp;<img src="/data/{{user.userID}}/profilePic.jpeg" height="50" width="50">&nbsp;{{user.name}}&nbsp; {% if user.userID in current_user.following %}
+        <a class="btn btn-success" href="/profile/{{user.username}}"> Following</a> {% else %}
+        <a class="btn btn-outline-dark" href="/profile/{{user.username}}"> Follow</a> {% endif %}
+    </h5><br> {% endfor %}{% else %}
+    <h1>No Users to show</h1> {% endif %}
 </div>
 {% endblock %}

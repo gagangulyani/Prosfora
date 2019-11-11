@@ -4,7 +4,7 @@ from wtforms import (StringField, SubmitField,
 from flask_wtf.file import FileField, FileRequired, FileAllowed
 from models.user import User
 from models.database import Database
-from wtforms.validators import (InputRequired,DataRequired,
+from wtforms.validators import (InputRequired, DataRequired,
                                 Length, Email, EqualTo)
 from customValidators import (checkForJunk,
                               StrongPassword, isUser, isUser2,
@@ -172,22 +172,12 @@ class PictureUpload(FlaskForm):
 
 
 class AccountUpdation(FlaskForm):
-    username = StringField('Username', validators=[DataRequired(),Length(min=2,max=20)])
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    picture = FileField('Update Profile Picture',validators=[FileAllowed(['jpg','png'])])
-    coverphoto = FileField('Update Cover Picture',validators=[FileAllowed(['jpg','png'])])
+    username = StringField('Username', validators=[
+                           checkForJunk, isUser, Length(min=2, max=20)])
+    email = StringField('Email', validators=[Email('Please Enter a valid email address'),
+                                             isUser, Email('Please Enter a valid email address')])
+    picture = FileField('Update Profile Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'],
+                                                                          'Only JPGs, PNGs and JPEGs are supported!')])
+    coverphoto = FileField('Update Cover Picture', validators=[FileAllowed(['jpg', 'png', 'jpeg'],
+                                                                           'Only JPGs, PNGs and JPEGs are supported!')])
     submit = SubmitField('Update')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
