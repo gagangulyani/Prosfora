@@ -198,6 +198,7 @@ class User:
 
     @staticmethod
     def isUser(email=None, username=None):
+        print(f'isUser :\n   email : {email}\n    username : {username}')
         if User.findUser(email=email, username=username):
             return True
         return False

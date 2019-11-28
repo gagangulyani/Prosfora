@@ -34,6 +34,8 @@ Database.initialize('Prosfora')
 # INIT Login Manager
 login_manager = LoginManager()
 
+# for debug
+DEBUG = True
 
 @login_manager.user_loader
 def load_user(userID):
@@ -77,8 +79,7 @@ def index():
     posts = []
     if current_user.is_authenticated:
         posts = User.newsfeed(current_user.userID)
-        
-    return render_template('index.html', posts = posts)
+    return render_template('index.html', posts = posts, findUser = User.findUser)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -268,7 +269,7 @@ def resources(postID=None,
                 data = post.get('content')
                 print('MP3')
         else:
-            flash('Unable to load Resources')
+            # flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
     else:
         user = User.findUser(userID=userID)
@@ -280,7 +281,7 @@ def resources(postID=None,
                 print('coverPhoto')
                 data = user.get('coverPhoto')
         else:
-            flash('Unable to load Resources')
+            # flash('Unable to load Resources')
             return redirect('/'), 404, {'Refresh': '1; url = /'}
 
     data = data.get('file')
@@ -302,14 +303,15 @@ def resources(postID=None,
 
 @app.route('/profile/<string:username>/followers')
 @app.route('/profile/<string:username>/following')
+@login_required
 def followers(username=None):
     if not username:
         return redirect('/'), 404, {'Refresh': '1; url = /'}
     
     if "followers" in request.path:
-        followers = User.getFollowers(userID = current_user.userID)
+        followers = User.getFollowers(userID = User.findUser(username=username)['userID'])
     else:
-        followers = User.getFollowers(userID = current_user.userID, following=True)
+        followers = User.getFollowers(userID = User.findUser(username=username)['userID'], following=True)
         
     return render_template('followers.html', users = followers)
 
@@ -347,6 +349,7 @@ def search():
 
 
 @app.route('/settings', methods=['GET', 'POST'])
+@login_required
 def settings():
     form = AccountUpdation()
     if request.method == "POST":
@@ -361,6 +364,7 @@ def settings():
             if form.picture.data:
                 data['profilePic'] = form.picture.data.read()
             if data:
+                print("Data received by Settings() :", data)
                 cu = User.findUser(userID=current_user.userID)
                 cu.update(data)
                 User.updateUserInfo(cu)
@@ -368,5 +372,5 @@ def settings():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=DEBUG)
  

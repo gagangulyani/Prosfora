@@ -63,90 +63,92 @@
         </div>
     </div>
 </div>
-{% else %} {{super()}} {% for post in posts %} {# post #} {% endfor %} {% if not posts %}
+{% else %} {{super()}}{% if not posts %}
 <div class="text-center">
     <h1 class="mt-5"><i>Start following people to see the posts!</i></h1>
     <h4>Explore <b><a href="/explore/people" style="color:black">PEOPLE</a></b> on <b><a
                 href='/featured'>Prosforá</a></b></h4>
 </div>
-{% else %} {% for post in posts %} {% if post.contentType == 'Picture' %}
-<div class="image-post w-75 mx-auto">
-    <h1>{{post.title}}</h1>
-    <div class="d-block">
-        <img class="w-75" src="/data/{{post.postID}}.jpeg">
-    </div>
-    {% if post.description %}
-    <p>
-        {{post.description}}
-    </p>
-    {% endif %}
-    <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
-    </button>
-    <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
-    </button>
-    <a href="/data/{{post.postID}}.jpeg" class="btn mx-2 btn-outline-light fas fa-download ">
-    </a>
-</div>
-{% elif post.contentType == 'Video' %}
-<div class="m-2 mx-auto w-75" onmouseover="play(this)">
-    <h1>{{post.title}}</h1>
-    <div class="video-post">
-        <video class="w-75" allowfullscreen autoplay="autoplay" loop="loop" controls="controls">
-            <source class="w-75" src="/data/{{post.postID}}.mp4" type="video/mp4">
-        </video>
-    </div>
-    {% if post.description %}
-    <p>
-        {{post.description}}
-    </p>
-    {% endif %}
+{% else %} {% for post in posts %}
 
-    <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
-    </button>
-    <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
-    </button>
-    <a href="/data/{{post.postID}}.mp4" class="btn mx-2 btn-outline-light fas fa-download ">
-    </a>
-</div>
-
-{% else %}
-<div class="audio-post sexy-font w-75 mx-auto">
-    <h1>{{post.title}}</h1>
-
-    {% if post.AlbumArt %}
-    <div class="AlbumArt">
-        <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg " alt="Card image cap ">
+<div class="w-75 mx-auto text-center p-4 m-2">
+    {% set Puser = findUser(userID = post.userID) %} {% if post.contentType == 'Picture' %}
+    <div class="image-post">
+        <div class="d-block">
+            <img class="w-75" src="/data/{{post.postID}}.jpeg">
+        </div>
+        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+        </button>
+        <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+        </button>
+        <a href="/data/{{post.postID}}.jpeg" class="btn mx-2 btn-outline-light fas fa-download ">
+        </a>
+        <hr>
     </div>
+    {% elif post.contentType == 'Video' %}
+    <div class="m-2">
+        <div class="video-post">
+            <video class="w-75" allowfullscreen loop="loop" controls="controls">
+                <source class="w-75" src="/data/{{post.postID}}.mp4" type="video/mp4">
+            </video>
+        </div>
+
+
+        <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+        </button>
+        <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+        </button>
+        <a href="/data/{{post.postID}}.mp4" class="btn mx-2 btn-outline-light fas fa-download ">
+        </a>
+    </div>
+
     {% else %}
-    <div class="AlbumArt">
-        <img class="card-img-top" src="/static/images/content/cassette.jpg" alt="Card image cap">
+    <div class="audio-post sexy-font">
+        {% if post.AlbumArt %}
+        <div class="AlbumArt">
+            <a href="/{{Puser.username}}/posts/{{post.postID}}">
+                <img class="card-img-top" src="/data/AlbumArt/{{post.postID}}.jpeg " alt="Card image cap ">
+            </a>
+        </div>
+        {% else %}
+        <div class="AlbumArt">
+            <a href="/{{Puser.username}}/posts/{{post.postID}}">
+                <img class="card-img-top" src="/static/images/content/cassette.jpg" alt="Card image cap">
+            </a>
+        </div>
+
+        {% endif %}
+
+        <div class="container">
+            <h6 class=""><span class="duration "></span></h6>
+            <div class="mb-2 audio-file tk{{post.id}} ">
+                <script>
+                    wavesurfer["{{post.id}}"] = render('{{post.id}}', ".tk{{post.id}} ", '/data/{{post.postID}}.mp3').playPause();;
+                </script>
+            </div>
+            <div class=" actions mt-2 ">
+                <span class="text-right ">
+                    <button class="btn mx-2 btn-outline-light fas fa-play-circle playPause"
+                        onclick="wavesurfer['{{post.id}}'].playPause();"></button>
+
+                    <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
+                    </button>
+                    <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
+                    </button>
+                    <a href="/data/{{post.postID}}.mp3" class="btn mx-2 btn-outline-light fas fa-download ">
+                    </a>
+                </span>
+            </div>
+        </div>
     </div>
 
     {% endif %}
-
-    <div class="container">
-        <h6 class=""><span class="duration "></span></h6>
-        <div class="mb-2 audio-file tk{{post.id}} ">
-            <script>
-                wavesurfer["{{post.id}}"] = render('{{post.id}}', ".tk{{post.id}} ", '/data/{{post.postID}}.mp3').playPause();;
-            </script>
-        </div>
-        <div class=" actions mt-2 ">
-            <span class="text-right ">
-                <button class="btn mx-2 btn-outline-light fas fa-play-circle playPause"
-                    onclick="wavesurfer['{{post.id}}'].playPause();"></button>
-
-                <button class="btn mx-2 btn-outline-light fas fa-thumbs-up ">
-                </button>
-                <button class="btn mx-2 btn-outline-light fas fa-thumbs-down ">
-                </button>
-                <a href="/data/{{post.postID}}.mp3" class="btn mx-2 btn-outline-light fas fa-download ">
-                </a>
-            </span>
-        </div>
-        <p>
-            {{post.description}}
-        </p>
-    </div>
+    <h1>{{post.title}}</h1>
+    {% if post.description %}
+    <p>
+        {{post.description}}
+    </p>
+    {% endif %}
+    <b>Posted By : <a href="/profile/{{Puser.username}}">{{Puser.name | title}}</a></b>
 </div>
-{% endif %} {% endfor %} {% endif %} {% endif %} {% endblock %}
+{% endfor %} {% endif %} {% endif %} {% endblock %}
