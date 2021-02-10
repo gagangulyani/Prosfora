@@ -1,7 +1,7 @@
 asn1crypto==1.2.0
 cffi==1.13.1
 Click==7.0
-cryptography==3.2
+cryptography==3.3.2
 dominate==2.4.0
 Flask==1.1.1
 Flask-Bootstrap4==4.0.2
